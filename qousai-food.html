@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قصي فوود - كل المنتجات</title>
+    <!-- ربط ملف الـ CSS الأساسي -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- تنسيق داخلي لترتيب الصور والأسماء وأزرار الكمية عمودياً -->
+    <style>
+        .food-grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            /* 4 أعمدة متساوية */
+            gap: 25px;
+            padding: 30px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 380px !important;
+        }
+
+        .qousai-food-card {
+            display: flex;
+            flex-direction: column;
+            /* ترتيب عمودي */
+            align-items: center;
+            /* توسيط المحتوى */
+            justify-content: space-between;
+            /* توزيع المساحة بالتساوي في الأسفل */
+            background-color: #111f3b !important;
+            border-radius: 12px !important;
+            border: 1px solid #e0e0e0 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+            padding: 15px !important;
+            transition: transform 0.2s ease !important;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .qousai-food-card:hover {
+            transform: translateY(-5px) !important;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .qousai-food-card img {
+            width: 100% !important;
+            max-width: 150px;
+            height: 150px !important;
+            object-fit: contain !important;
+            border-radius: 8px !important;
+            margin-bottom: 12px !important;
+        }
+
+        .qousai-food-card h3 {
+            margin: 0 0 12px 0 !important;
+            font-size: 1rem !important;
+            color: #ffffff !important;
+            font-weight: 600 !important;
+            min-height: 40px;
+            /* لتوحيد المسافات إذا كان الاسم طويلاً */
+            display: flex;
+            align-items: center;
+        }
+
+        /* تنسيق أزرار الكمية ليطابق تصميم الصفحة الأولى بشكل مصغر وأنيق */
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: auto;
+            /* يدفع الأزرار دائماً لتكون في قاع الكرت */
+        }
+
+        .btn-minus,
+        .btn-plus {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 30px;
+            height: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .btn-minus:hover,
+        .btn-plus:hover {
+            background-color: #e0e0e0;
+        }
+
+        .quantity-num {
+            font-size: 1rem;
+            font-weight: bold;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .btn-back {
+            display: block;
+            width: 160px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #1976d2;
+            color: white;
+            text-decoration: none !important;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            transition: 0.2s;
+        }
+
+        .btn-back :hover {
+            color: #ffffff !important;
+            text-decoration: none !important;
+            background-color: #115293;
+        }
+
+        .btn-back :focus {
+            color: #ffffff !important;
+            text-decoration: none !important;
+            outline: none;
+        }
+
+        .btn-back :active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="main-header">
+        <h1>منتجات قصي فوود</h1>
+        <p>تصفح تشكيلتنا الكاملة والمميزة</p>
+
+        <!-- شريط البحث التفاعلي الفوري الجديد -->
+        <div class="search-container" style="position: relative; z-index: 9999;">
+            <input type="text" id="qousaiSearchInput" placeholder="ابحث عن منتج..." onkeyup="
+        let query = document.getElementById('qousaiSearchInput').value.trim().toLowerCase();
+        let items = document.getElementsByClassName('qousai-food-card');
+        
+        for (let i = 0; i < items.length; i++) {
+            let h3 = items[i].getElementsByTagName('h3')[0];
+            if (h3) {
+                let name = h3.textContent || h3.innerText;
+                if (name.toLowerCase().indexOf(query) > -1) {
+                    items[i].style.setProperty('display', '', 'important');
+                } else {
+                    items[i].style.setProperty('display', 'none', 'important');
+                }
+            }
+        }
+    ">
+        </div>
+
+
+
+    </header>
+    <!-- زر العودة لصفحة المنتجات -->
+    <div class="btn-back">
+        <a href="products.html">العودة لصفحة المنتجات</a>
+    </div>
+
+    <main class="food-grid-container">
+
+        <!-- المنتج 1 -->
+        <div class="qousai-food-card">
+            <img src="ماء ورد.png.jpeg" alt="ماء ورد">
+            <h3>ماء ورد</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-1' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-1">0</span>
+                <button class="btn-plus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-1' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 2 -->
+        <div class="qousai-food-card">
+            <img src="ماء زهر.png.jpeg" alt="ماء زهر">
+            <h3>ماء زهر</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-2' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-2">0</span>
+                <button class="btn-plus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-2' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 3 -->
+        <div class="qousai-food-card">
+            <img src="زعتر احمرpng.jpeg" alt="زعتر احمر">
+            <h3>زعتر احمر</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-3' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-3">0</span>
+                <button class="btn-plus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-3' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 4 -->
+        <div class="qousai-food-card">
+            <img src="زعتر اخضر.png.jpeg" alt="زعتر اخضر">
+            <h3>زعتر اخضر</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-4' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-4">0</span>
+                <button class="btn-plus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-4' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 5 -->
+        <div class="qousai-food-card">
+            <img src="ملوخية مجففةpng.jpeg" alt="ملوخية مجففة">
+            <h3>ملوخية مجففة</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-5' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-5">0</span>
+                <button class="btn-plus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-5' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 6 -->
+        <div class="qousai-food-card">
+            <img src="دبس العنب السائلpng.jpeg" alt="دبس العنب السائل">
+            <h3>دبس العنب السائل</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-6' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-6">0</span>
+                <button class="btn-plus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-6' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 7 -->
+        <div class="qousai-food-card">
+            <img src="دبس تمر 600غرام.png.jpeg" alt="دبس تمر 600 غرام">
+            <h3>دبس التمر السائل 600 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-7' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-7">0</span>
+                <button class="btn-plus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-7' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 8 -->
+        <div class="qousai-food-card">
+            <img src="دبس تمر 3كيلو.png.jpeg" alt="دبس تمر 3 كيلو">
+            <h3>دبس تمر 3 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-8' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-8">0</span>
+                <button class="btn-plus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-8' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 9 -->
+        <div class="qousai-food-card">
+            <img src="فطر مقطع تنك 170غرام.png.jpeg" alt="فطر مقطع تنك 170 غرام">
+            <h3>فطر مقطع تنك 170 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-9' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-9">0</span>
+                <button class="btn-plus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-9' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 10 -->
+        <div class="qousai-food-card">
+            <img src="فطر مقطع زجاج 170غرام.png.jpeg" alt="فطر مقطع زجاج 170 غرام">
+            <h3>فطر مقطع زجاج 170 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-10' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-10">0</span>
+                <button class="btn-plus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-10' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 11 -->
+        <div class="qousai-food-card">
+            <img src="فطر مقطع 800غرامpng.jpeg" alt="فطر مقطع 800 غرام">
+            <h3>فطر مقطع 800 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-11' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-11">0</span>
+                <button class="btn-plus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-11' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 12 -->
+        <div class="qousai-food-card">
+            <img src="فطر مقطع 4كيلو.png.jpeg" alt="فطر مقطع 4 كيلو">
+            <h3>فطر مقطع 4 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-12' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-12">0</span>
+                <button class="btn-plus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-12' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 13 -->
+        <div class="qousai-food-card">
+            <img src="حلاوة بالفستق 4كيلوpng.jpeg" alt="حلاوة بالفستق 4 كيلو">
+            <h3>حلاوة بالفستق 4 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-13' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-13">0</span>
+                <button class="btn-plus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-13' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 14 -->
+        <div class="qousai-food-card">
+            <img src="حلاوة 250غرام.png.jpeg" alt="حلاوة 250 غرام">
+            <h3>حلاوة 250 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-14' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-14">0</span>
+                <button class="btn-plus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-14' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 15 -->
+        <div class="qousai-food-card">
+            <img src="حلاوة 800غرام.png.jpeg" alt="حلاوة 800 غرام">
+            <h3>حلاوة 800 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-15' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-15">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-15' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 16 -->
+        <div class="qousai-food-card">
+            <img src="حلاوة 400غرام.png.jpeg" alt="حلاوة 400 غرام">
+            <h3>حلاوة 400 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-16' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-16">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-16' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 17 -->
+        <div class="qousai-food-card">
+            <img src="فليفلة مفرومة حارة 3.5.png.jpeg" alt="فليفلة مفرومة حارة 3.5 كيلو">
+            <h3>فليفلة مفرومة حارة 3.5 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-17' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-17">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-17' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 18 -->
+        <div class="qousai-food-card">
+            <img src="فليفلة مفرومة حارة 7كيلو.png.jpeg" alt="فليفلة مفرومة حارة 7 كيلو">
+            <h3>فليفلة مفرومة حارة 7 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-18' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-18">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-18' , 'plus')">+</button>
+
+            </div>
+        </div>
+        <!--المنتج 19-->
+        <div class="qousai-food-card">
+            <img src="فليفلة مفرومة حلوة 3.5كيلو.png.jpeg" alt="فليفلة مفرومة حلوة 3.5 كيلو">
+            <h3>فليفلة مفرومة حلوة 3.5 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-19' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-19">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-19' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 20-->
+        <div class="qousai-food-card">
+            <img src="شطة سائلة 3.7كيلو.png.jpeg" alt="شطة سائلة 3.7 كيلو">
+            <h3>شطة سائلة 3.7 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-20' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-20">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-20' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 21-->
+        <div class="qousai-food-card">
+            <img src="شطة سائلة 800غرام.png.jpeg" alt="شطة سائلة 800 غرام">
+            <h3>شطة سائلة 800 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-21' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-21">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-21' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 22-->
+        <div class="qousai-food-card">
+            <img src="شطة سائلة 250غرام.png.jpeg" alt="شطة سائلة 250 غرام">
+            <h3>شطة سائلة 250 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-22' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-22">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-22' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 23-->
+        <div class="qousai-food-card">
+            <img src="شطة سائلة 100غرام.png.jpeg" alt="شطة سائلة 100 غرام">
+            <h3>شطة سائلة 100 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-23' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-23">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-23' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 24-->
+        <div class="qousai-food-card">
+            <img src="زيتون اسود شرائح 170غرام.png.jpeg" alt="زيتون اسود شرائح 170 غرام">
+            <h3>زيتون اسود شرائح 170 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-24' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-24">0</span>
+                <button class="btn-plus" onclick="changeQuantity('قصي فوود' , 'qty-qousai-24' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 25-->
+        <div class="qousai-food-card">
+            <img src="زيتون اسود شرائح 5كيلو.png.jpeg" alt="زيتون اسود شرائح 5 كيلو">
+            <h3>زيتون اسود شرائح 5 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-25' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-25">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-25' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 26-->
+        <div class="qousai-food-card">
+            <img src="خل تفاح 500ميلي.png.jpeg" alt="خل تفاح 500ميلي">
+            <h3>خل تفاح 500ميلي</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-26' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-26">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-26' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 27-->
+        <div class="qousai-food-card">
+            <img src="خل تفاح 1لتر.png.jpeg" alt="خل تفاح 1 لتر">
+            <h3>خل تفاح 1 لتر</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-27' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-27">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-27' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 28-->
+        <div class="qousai-food-card">
+            <img src="خل تفاح 4لتر.png.jpeg" alt="خل تفاح 4 لتر">
+            <h3>خل تفاح 4 لتر</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-28' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-28">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-28' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 29-->
+        <div class="qousai-food-card">
+            <img src="خل ابيض 500ميلي.png.jpeg" alt="خل ابيض 500ميلي">
+            <h3>خل ابيض 500ميلي</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-29' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-29">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-29' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+
+
+        <!--المنتج 30-->
+        <div class="qousai-food-card">
+            <img src="خل ابيض 1لتر.png.jpeg" alt="خل ابيض 1 لتر">
+            <h3>خل ابيض 1 لتر</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-30' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-30">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-30' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+        <!--المنتج 31-->
+        <div class="qousai-food-card">
+            <img src="خل ابيض 4لتر.png.jpeg" alt="خل ابيض 4 لتر">
+            <h3>خل ابيض 4 لتر</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-31' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-31">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-31' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 32-->
+        <div class="qousai-food-card">
+            <img src="دبية طحينية سمسم 22كيلو.png.jpeg" alt="دبية طحينية سمسم 22 كيلو">
+            <h3>دبية طحينية سمسم 22 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-32' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-32">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-32' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 33-->
+        <div class="qousai-food-card">
+            <img src="طحينية سمسم 300غرام.png.jpeg" alt="طحينية سمسم 300 غرام">
+            <h3>طحينية سمسم 300 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-33' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-33">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-33' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+        <!--المنتج 34-->
+        <div class="qousai-food-card">
+            <img src="طحينية سمسم 1كيلو.png.jpeg" alt="طحينية سمسم 1 كيلو">
+            <h3>طحينية سمسم 1 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-34' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-34">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-34' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 35-->
+        <div class="qousai-food-card">
+            <img src="طحينية سمسم 4كيلو.png.jpeg" alt="طحينية سمسم 4 كيلو">
+            <h3>طحينية سمسم 4 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-35' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-35">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-35' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 36-->
+        <div class="qousai-food-card">
+            <img src="صلصة البيتزا 500غرام.png.jpeg" alt="صلصلة البيتزا 500 غرام">
+            <h3>صلصلة البيتزا 500 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-36' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-36">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-36' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 37-->
+        <div class="qousai-food-card">
+            <img src="صلصة البيتزا 4.5كيلو.png.jpeg" alt="صلصلة البيتزا 4.5 كيلو">
+            <h3>صلصلة البيتزا 4.5 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-37' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-37">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-37' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+        <!--المنتج 38-->
+        <div class="qousai-food-card">
+            <img src="كتشب حلو 400غرام.png.jpeg" alt="كتشب حلو 400 غرام">
+            <h3>كتشب حلو 400 غرام </h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-38' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-38">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-38' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 39-->
+        <div class="qousai-food-card">
+            <img src="كتشب حلو 800غرام.png.jpeg" alt="كتشب حلو 800 غرام">
+            <h3>كتشب حلو 800 غرام </h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-39' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-39">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-39' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+        <!--المنتج 40-->
+        <div class="qousai-food-card">
+            <img src="كتشب حلو 1كيلو.png.jpeg" alt="كتشب حلو 1 كيلو">
+            <h3>كتشب حلو 1 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-40' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-40">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-40' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+
+        <!--المنتج 41-->
+        <div class="qousai-food-card">
+            <img src="كتشب حلو 3.8كيلو.png.jpeg" alt="كتشب حلو 3.8 كيلو">
+            <h3>كتشب حلو 3.8 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-41' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-41">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-41' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+
+
+        <!--المنتج 42-->
+        <div class="qousai-food-card">
+            <img src="كتشب حلو 4.5كيلو.png.jpeg" alt="كتشب حلو 4.5 كيلو">
+            <h3>كتشب حلو 4.5 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-42' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-42">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-42' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+        <!--المنتج 43-->
+        <div class="qousai-food-card">
+            <img src="كتشب حار 200غرام.png.jpeg" alt="كتشب حار 200 غرام">
+            <h3>كتشب حار 200 غرام </h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-43' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-43">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-43' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+
+
+        <!--المنتج 44-->
+        <div class="qousai-food-card">
+            <img src="كتشب حار 375غرام.png.jpeg" alt="كتشب حار 375 غرام">
+            <h3>كتشب حار 375 غرام </h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-44' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-44">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-44' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+
+
+        <!--المنتج 45-->
+        <div class="qousai-food-card">
+            <img src="كتشب حار 4.5كيلو.png.jpeg" alt="كتشب حار 4.5 كيلو">
+            <h3>كتشب حار 4.5 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-45' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-45">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-45' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+
+        <!--المنتج 46-->
+        <div class="qousai-food-card">
+            <img src="معجون طماطم 300غرام.png.jpeg" alt="معجون طماطم 300 غرام">
+            <h3>معجون طماطم 300 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-46' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-46">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-46' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 47-->
+        <div class="qousai-food-card">
+            <img src="معجون طماطم زجاج 600غرام.png.jpeg" alt="معجون طماطم قزاز 600 غرام">
+            <h3>معجون طماطم زجاج 600 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-47' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-47">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-47' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+        <!--المنتج 48-->
+        <div class="qousai-food-card">
+            <img src="معجون طماطم 1كيلو.png.jpeg" alt="معجون طماطم 1 كيلو">
+            <h3>معجون طماطم 1 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-48' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-48">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-48' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 49-->
+        <div class="qousai-food-card">
+            <img src="معجون طماطم 2كيلو.png.jpeg" alt="معجون طماطم 2 كيلو">
+            <h3>معجون طماطم 2 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-49' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-49">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-49' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+        <!--المنتج 50-->
+        <div class="qousai-food-card">
+            <img src="معجون طماطم 4كيلو.png.jpeg" alt="معجون طماطم 4 كيلو">
+            <h3>معجون طماطم 4 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-50' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-50">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-50' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+        <!--المنتج 51-->
+        <div class="qousai-food-card">
+            <img src="معجون طماطم 8كيلو.png.jpeg" alt="معجون طماطم 8 كيلو">
+            <h3>معجون طماطم 8 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-51' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-51">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-51' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+        <!--المنتج 52-->
+        <div class="qousai-food-card">
+            <img src="دبس رمان 150غرام.png.jpeg" alt="دبس رمان 150 غرام">
+            <h3>دبس رمان 150 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-52' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-52">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-52' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+        <!--المنتج 53-->
+        <div class="qousai-food-card">
+            <img src="دبس رمان 1كيلو.png.jpeg" alt="دبس رمان 1 كيلو">
+            <h3>دبس رمان 1 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-53' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-53">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-53' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+        <!--المنتج 54-->
+        <div class="qousai-food-card">
+            <img src="دبس رمان 5كيلو.png.jpeg" alt="دبس رمان 5 كيلو">
+            <h3>دبس رمان 5 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-54' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-54">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-54' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+        <!--المنتج 55-->
+        <div class="qousai-food-card">
+            <img src="ذرة صفراء زجاج 200 غرام.png.jpeg" alt="ذرة صفراء زجاج 200 غرام">
+            <h3>ذرة صفراء زجاج 200 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-55' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-55">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-55' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 56-->
+        <div class="qousai-food-card">
+            <img src="ذرة صفراء تنك 200غرام.png.jpeg" alt="ذرة صفراء تنك 200 غرام">
+            <h3>ذرة صفراء تنك 200 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-56' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-56">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-56' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 57-->
+        <div class="qousai-food-card">
+            <img src="ذرة صفراء 1600 غرام.png.jpeg" alt="ذرة صفراء 1600 غرام">
+            <h3>ذرة صفراء 1600 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-57' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-57">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-57' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 58-->
+        <div class="qousai-food-card">
+            <img src="فول 200 غرام.png.jpeg" alt="فول 200 غرام">
+            <h3>فول 200 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-58' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-58">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-58' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 59-->
+        <div class="qousai-food-card">
+            <img src="حمص بالطحينية 350 غرام.png.jpeg" alt="حمص بالطحينية 350 غرام">
+            <h3>حمص بالطحينية 350 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-59' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-59">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-59' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+        <!--المنتج 60-->
+        <div class="qousai-food-card">
+            <img src="مربى مشمش 450 غرام.png.jpeg" alt="مربى مشمش 450 غرام">
+            <h3>مربى مشمش 450 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-60' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-60">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-60' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+        <!--المنتج 61-->
+        <div class="qousai-food-card">
+            <img src="مربى مشمش 900غرام.png.jpeg" alt="مربى مشمش 900 غرام">
+            <h3>مربى مشمش 900 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-qousai-61' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-61">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-qousai-61' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+        <!--المنتج 62-->
+        <div class="qousai-food-card">
+            <img src="مربى مشمش 2 كيلو.png.jpeg" alt="مربى مشمش 2 كيلو">
+            <h3>مربى مشمش 2 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-62' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-62">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-62' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+        <!--المنتج 63-->
+        <div class="qousai-food-card">
+            <img src="مربى مشمش 3كيلو.png.jpeg" alt="مربى مشمش 3 كيلو">
+            <h3>مربى مشمش 3 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-63' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-63">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-63' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+
+        <!--المنتج 64-->
+        <div class="qousai-food-card">
+            <img src="مربى فراولة 900 غرام.png.jpeg" alt="مربى فراولة 900 غرام">
+            <h3>مربى فراولة 900 غرام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-64' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-64">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-64' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+        <!--المنتج 65-->
+        <div class="qousai-food-card">
+            <img src="مربى فراولة 2كيلو.png.jpeg" alt="مربى فراولة 2 كيلو">
+            <h3>مربى فراولة 2 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-65' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-65">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-65' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+        <!--المنتج 66-->
+        <div class="qousai-food-card">
+            <img src="مربى فراولة 3 كيلو.png.jpeg" alt="مربى فراولة 3 كيلو">
+            <h3>مربى فراولة 3 كيلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-66' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-66">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-66' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+        <!--المنتج 67-->
+        <div class="qousai-food-card">
+            <img src="مربى تين 3كيلو.png.jpeg" alt="مربى تين 3 كيلو">
+            <h3>مربى تين 3 كيلو </h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-67' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-qousai-67">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-67' , 'plus')">+</button>
+            </div>
+        </div>
+
+    </main>
+    <!-- ربط ملف الـ JavaScript الأساسي -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مركز الوادي - سلة المشتريات</title>
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        body {
+            background-color: #11141a;
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        /* حاوية الصفحة الكبيرة المحاكية للهاتف */
+        .cart-container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #0b111e;
+            border-radius: 30px;
+            border: 3px solid #c5a059;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-sizing: border-box;
+        }
+
+        .page-title {
+            color: #c5a059;
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(197, 160, 89, 0.2);
+            padding-bottom: 10px;
+        }
+
+        /* تصميم ورقة الفاتورة المنسقة في منتصف الشاشة */
+        .invoice-paper {
+            background-color: #ffffff;
+            color: #333333;
+            border-radius: 4px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            margin-bottom: 25px;
+            background-image: linear-gradient(#f4f4f4 1px, transparent 1px);
+            background-size: 100% 25px;
+            line-height: 25px;
+        }
+
+        /* إعطاء مظهر الورقة المشرشرة من الأسفل */
+        .invoice-paper::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(-45deg, #0b111e 5px, transparent 0), linear-gradient(45deg, #0b111e 5px, transparent 0);
+            background-size: 10px 10px;
+        }
+
+        .invoice-header {
+            text-align: center;
+            font-weight: 700;
+            border-bottom: 2px dashed #888888;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            color: #11141a;
+        }
+
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .invoice-table th {
+            border-bottom: 1px solid #333;
+            text-align: right;
+            padding: 4px 0;
+        }
+
+        .invoice-table td {
+            padding: 6px 0;
+            border-bottom: 1px dotted #ccc;
+        }
+
+        .total-row {
+            font-weight: 700;
+            font-size: 16px;
+            border-top: 2px dashed #333;
+            padding-top: 8px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* تصميم استمارات إدخال بيانات الزبون */
+        .user-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group label {
+            color: #e2e8f0;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            background-color: #11141a;
+            border: 1px solid rgba(197, 160, 89, 0.5);
+            border-radius: 8px;
+            padding: 10px;
+            color: #ffffff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #c5a059;
+        }
+
+        /* أزرار التحكم والإرسال */
+        .btn-submit {
+            background-color: #c5a059;
+            color: #0b111e;
+            border: none;
+            border-radius: 25px;
+            padding: 12px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(197, 160, 89, 0.2);
+        }
+
+        .btn-submit:hover {
+            background-color: #e2e8f0;
+            transform: translateY(-2px);
+        }
+
+        .btn-back {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .btn-back a {
+            color: #a0aec0;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cart-container">
+        <h1 class="page-title">سلة المشتريات الفاتورة</h1>
+
+        <!-- ورقة الفاتورة المنسقة التي تظهر بمنتصف الشاشة فوق الفورم -->
+        <div class="invoice-paper">
+            <div class="invoice-header">مركز الوادي - تفاصيل الطلب</div>
+            <table class="invoice-table">
+                <thead>
+                    <tr>
+                        <th>الصنف</th>
+                        <th style="text-align: center;">الكمية</th>
+                        <th style="text-align: left;">النوع</th>
+                    </tr>
+                </thead>
+                <tbody id="cart-table-body">
+                    <!-- سيتم التوليد التلقائي هنا -->
+                </tbody>
+            </table>
+            <div class="total-row">
+                <span>إجمالي الأصناف:</span>
+                <span id="cart-total-qty">0 طرود</span>
+            </div>
+        </div>
+
+        <!-- 🛠️ التعديل الجذري: تحويل الحقول إلى فورم رسمي يتوجه مباشرة للواتساب الصحيح -->
+        <form action="https://wa.me" method="GET" target="_blank" class="user-form" id="orderForm"
+            onsubmit="return buildWadiMessageBeforeSend(event)">
+
+            <!-- حقل مخفي لتحديد رقم مركز الوادي المستلم للفاتورة بشكل إجباري ومباشر -->
+            <input type="hidden" name="phone" value="963992351754">
+
+            <!-- حقل مخفي يتم تعبئته بنص الفاتورة تلقائياً قبل الإرسال -->
+            <input type="hidden" name="text" id="whatsapp-text-input">
+
+            <div class="form-group">
+                <label for="username">اسم العميل (المحل):</label>
+                <input type="text" id="username" class="wadi-name" placeholder="أدخل اسمك أو اسم المحل" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">رقم الهاتف للاتصال:</label>
+                <input type="tel" id="phone" class="wadi-phone" placeholder="مثال: 0992351754" required>
+            </div>
+
+            <div class="form-group">
+                <label for="location">عنوان المحل أو الموقع:</label>
+                <input type="text" id="location" class="wadi-loc" placeholder="مثال: السويداء - حي الأمل" required>
+            </div>
+
+            <!-- زر إرسال حقيقي للفورم يستحيل حظره أو تعطيله -->
+            <button type="submit" class="btn-submit"
+                style="display: block; width: 100%; text-align: center; border: none; cursor: pointer; height: 40px; line-height: 40px; background-color: #ecc07d; color: #11141a; font-weight: bold; border-radius: 5px; font-size: 15px; box-sizing: border-box; padding: 0;">
+                تأكيد وإرسال عبر الواتساب
+            </button>
+        </form>
+
+        <!-- زر العودة لصفحة المنتجات الأصلي تحت الفورم -->
+        <div class="btn-back" style="margin-top: 20px; text-align: center;">
+            <a href="products.html" style="color: #ecc07d; text-decoration: none; font-size: 14px;">← العودة لصفحة
+                المنتجات</a>
+        </div>
+
+        <!-- كود الجافا سكريبت النظيف جداً بدون توليد روابط معقدة -->
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                function updateLiveInvoiceDirectly() {
+                    const tableBody = document.getElementById("cart-table-body");
+                    const totalElement = document.getElementById("cart-total-qty");
+
+                    if (!tableBody) return;
+
+                    let totalQty = 0;
+                    tableBody.innerHTML = "";
+
+                    for (let i = 0; i < localStorage.length; i++) {
+                        let key = localStorage.key(i);
+
+                        if (key && key.startsWith('qty-') && !key.endsWith('_name')) {
+                            let qty = parseInt(localStorage.getItem(key)) || 0;
+                            let arabicName = localStorage.getItem(key + '_name') || "صنف غير معرف";
+
+                            if (qty > 0) {
+                                totalQty += qty;
+                                let row = "<tr>" +
+                                    "<td>" + arabicName + "</td>" +
+                                    "<td style='text-align: center;'>" + qty + "</td>" +
+                                    "<td style='text-align: left;'>طرد</td>" +
+                                    "</tr>";
+                                tableBody.innerHTML += row;
+                            }
+                        }
+                    }
+
+                    if (totalQty === 0) {
+                        tableBody.innerHTML = "<tr><td colspan='3' style='text-align:center; color:#888; padding: 20px 0;'>السلة فارغة، يرجى العودة واختيار أصناف.</td></tr>";
+                    }
+
+                    if (totalElement) {
+                        totalElement.innerText = totalQty + " طرود";
+                    }
+                }
+
+                updateLiveInvoiceDirectly();
+            });
+
+            // دالة تجهيز نص الفاتورة فقط وضخها داخل الفورم
+            function buildWadiMessageBeforeSend(event) {
+                var nameVal = document.getElementById('username') ? document.getElementById('username').value.trim() : "";
+                var phoneVal = document.getElementById('phone') ? document.getElementById('phone').value.trim() : "";
+                var locVal = document.getElementById('location') ? document.getElementById('location').value.trim() : "";
+
+                if (nameVal === "" || phoneVal === "" || locVal === "") {
+                    alert("يرجى ملء جميع البيانات أولاً!");
+                    event.preventDefault();
+                    return false;
+                }
+
+                var messageText = "طلب شراء جديد - مركز الوادي\n";
+                messageText += "الاسم: " + nameVal + "\n";
+                messageText += "رقم الهاتف: " + phoneVal + "\n";
+                messageText += "العنوان: " + locVal + "\n";
+                messageText += "----------------------------\n";
+                messageText += "تفاصيل الطلبية:\n\n";
+
+                var hasItems = false;
+                var totalQty = 0;
+
+                for (var i = 0; i < localStorage.length; i++) {
+                    var key = localStorage.key(i);
+                    if (key && key.startsWith('qty-') && !key.endsWith('_name')) {
+                        var qty = parseInt(localStorage.getItem(key)) || 0;
+                        var arabicName = localStorage.getItem(key + '_name') || "صنف غير معرف";
+
+                        if (qty > 0) {
+                            hasItems = true;
+                            totalQty += qty;
+                            messageText += "- " + arabicName + ": " + qty + " طرد\n";
+                        }
+                    }
+                }
+
+                messageText += "\n----------------------------\n";
+                messageText += "إجمالي الكمية: " + totalQty + " طرود";
+
+                if (!hasItems) {
+                    alert("سلة المشتريات فارغة!");
+                    event.preventDefault();
+                    return false;
+                }
+
+                // نضع النص الصافي داخل الحقل المخفي، والفورم سيتكفل بتشفيره وإرساله تلقائياً
+                var hiddenInput = document.getElementById('whatsapp-text-input');
+                if (hiddenInput) {
+                    hiddenInput.value = messageText;
+                }
+
+                return true; // تفعيل إرسال الفورم الفوري
+            }
+        </script>
+</body>
+
+</html>

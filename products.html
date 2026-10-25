@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width , initial-scale=1.0">
+    <title>مركز الوادي - منتجات</title>
+    <!--هنا سنربط ملف ال css-->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!--عنوان التطبيق الرئيسي-->
+    <header class="main-header">
+        <div class="brand-logo-container">
+            <img src="مركز الوادي.png.jpeg" alt="شعار مركز الوادي" class="brand-logo">
+        </div>
+        <h1>مركز الوادي</h1>
+        <p>الوكيل الرسمي لموالح معن و بسكويت تورن و قصي فوود</p>
+    </header>
+
+    <!-- تم إدخال زر الـ Next داخل حاوية الـ main لتجنب مشاكل التداخل والـ Flexbox -->
+    <main class="product-container">
+
+        <!-- قسم موالح معن -->
+        <section class="brand-section" id="ma'an-section">
+            <div class="section-title-container">
+                <h2 class="section-title">موالح معن</h2>
+                <img src="موالح معن.png" alt="موالح معن">
+            </div>
+
+            <div class="products-grid">
+                <!-- هنا ستوضع كروت المنتجات الصغيرة لاحقاً إن وجدت -->
+            </div>
+
+            <!--زر عرض المزيد الخاص بقسم موالح معن-->
+            <a href="ma'an-nuts.html">
+                <button class="btn-show-more">عرض المزيد</button>
+            </a>
+        </section>
+
+        <!--قسم بسكوت تورن-->
+        <section class="brand-section" id="toren-section">
+            <div class="section-title-container">
+                <h2 class="section-title">بسكوت تورن</h2>
+                <img src="toren.png" alt="بسكون نورن">
+            </div>
+
+            <div class="products-grid">
+                <!-- هنا ستوضع كروت المنتجات الصغيرة لاحقاً إن وجدت -->
+            </div>
+
+            <a href="toren-biscuits.html">
+                <button class="btn-show-more">عرض المزيد</button>
+            </a>
+        </section>
+
+
+
+        <!-- قسم قصي فوود-->
+        <section class="brand-section" id="qousai-section">
+            <div class="section-title-container">
+                <h2 class="section-title">قصي فوود</h2>
+                <img src="قصي فوود.png.jpeg" alt="قصي فوود">
+            </div>
+
+            <div class="products-grid">
+                <!-- هنا ستوضع كروت المنتجات الصغيرة لاحقاً إن وجدت -->
+            </div>
+
+            <!--زر عرض المزيد الخاص بقسم  قصي فوود-->
+            <a href="qousai-food.html">
+                <button class="btn-show-more">عرض المزيد</button>
+            </a>
+        </section>
+
+        <!-- زر الانتقال إلى سلة المشتريات مدمج في مكانه الصحيح هندسياً -->
+        <div class="next-page-container">
+            <a href="cart.html">
+                <button class="btn-next-page">التالي (السلة) ←</button>
+            </a>
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+
+    <!-- الكود النهائي والمضمون لتوحيد ارتفاع الأقسام الثلاثة -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. استهداف الأقسام الثلاثة مباشرة باستخدام الكلاس الصحيح لها
+            const brandSections = document.querySelectorAll('.brand-section');
+
+            if (brandSections.length > 0) {
+                let maxHeight = 0;
+
+                // 2. حساب ارتفاع أطول كارت موجود بينهم بالبكسل
+                brandSections.forEach(section => {
+                    section.style.height = '';
+                    const sectionHeight = section.offsetHeight;
+                    if (sectionHeight > maxHeight) {
+                        maxHeight = sectionHeight;
+                    }
+                });
+
+                // 3. إجبار الكروت الثلاثة على أخذ نفس الارتفاع الأقصى
+                brandSections.forEach(section => {
+                    section.style.setProperty('height', maxHeight + 'px', 'important');
+                });
+            }
+        });
+    </script>
+</body>
+
+
+</body>
+
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موالح معن - كل المنتجات</title>
+    <!-- ربط ملف الـ CSS الأساسي -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- تنسيق داخلي لترتيب الصور والأسماء وأزرار الكمية عمودياً -->
+    <style>
+        .nuts-grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            /* 4 أعمدة متساوية */
+            gap: 25px;
+            padding: 30px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 380px !important;
+        }
+
+        .ma-an-nuts-card {
+            display: flex;
+            flex-direction: column;
+            /* ترتيب عمودي */
+            align-items: center;
+            /* توسيط المحتوى */
+            justify-content: space-between;
+            /* توزيع المساحة بالتساوي في الأسفل */
+            background-color: #111f3b !important;
+            border-radius: 12px !important;
+            border: 1px solid #e0e0e0 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+            padding: 15px !important;
+            transition: transform 0.2s ease !important;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .ma-an-nuts-card:hover {
+            transform: translateY(-5px) !important;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .ma-an-nuts-card img {
+            width: 100% !important;
+            max-width: 150px;
+            height: 150px !important;
+            object-fit: contain !important;
+            border-radius: 8px !important;
+            margin-bottom: 12px !important;
+        }
+
+        .ma-an-nuts-card h3 {
+            margin: 0 0 12px 0 !important;
+            font-size: 1rem !important;
+            color: #ffffff !important;
+            font-weight: 600 !important;
+            min-height: 40px;
+            /* لتوحيد المسافات إذا كان الاسم طويلاً */
+            display: flex;
+            align-items: center;
+        }
+
+        /* تنسيق أزرار الكمية ليطابق تصميم الصفحة الأولى بشكل مصغر وأنيق */
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: auto;
+            /* يدفع الأزرار دائماً لتكون في قاع الكرت */
+        }
+
+        .btn-minus,
+        .btn-plus {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 30px;
+            height: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .btn-minus:hover,
+        .btn-plus:hover {
+            background-color: #e0e0e0;
+        }
+
+        .quantity-num {
+            font-size: 1rem;
+            font-weight: bold;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .btn-back {
+            display: block;
+            width: 160px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #1976d2;
+            color: white;
+            text-decoration: none !important;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            transition: 0.2s;
+        }
+
+        .btn-back :hover {
+            color: #ffffff !important;
+            text-decoration: none !important;
+            background-color: #115293;
+        }
+
+        .btn-back :focus {
+            color: #ffffff !important;
+            text-decoration: none !important;
+            outline: none;
+        }
+
+        .btn-back :active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="main-header">
+        <h1>منتجات موالح معن</h1>
+        <p>تصفح تشكيلتنا الكاملة والمميزة</p>
+
+        <!-- شريط البحث التفاعلي -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="ابحث عن منتج...">
+        </div>
+
+    </header>
+    <!-- زر العودة لصفحة المنتجات -->
+    <div class="btn-back">
+        <a href="products.html">العودة لصفحة المنتجات</a>
+    </div>
+
+    <main class="nuts-grid-container">
+
+        <!-- المنتج 1 -->
+        <div class="ma-an-nuts-card">
+            <img src="قضامة صفرا.png" alt="قضامة صفرا">
+            <h3>قضامة صفرا</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-1' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-1">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-1' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 2 -->
+        <div class="ma-an-nuts-card">
+            <img src="بزر ابيض.png.jpeg" alt="بزر ابيض">
+            <h3>بزر ابيض</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-2' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-2">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-2' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 3 -->
+        <div class="ma-an-nuts-card">
+            <img src="راحة وبسكوت.png" alt="راحة وبسكوت">
+            <h3>راحة وبسكوت</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-3' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-3">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-3' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 4 -->
+        <div class="ma-an-nuts-card">
+            <img src="قضامة مدخنة.png.jpeg" alt="قضامة مدخنة">
+            <h3>قضامة مدخنة</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-4' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-4">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-4' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 5 -->
+        <div class="ma-an-nuts-card">
+            <img src="كيس مشكل.png.jpeg" alt="مخلوطة أول">
+            <h3>مخلوطة أول</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-5' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-5">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-5' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 6 -->
+        <div class="ma-an-nuts-card">
+            <img src="بزر مصري.png" alt="بزر مصري">
+            <h3>بزر مصري</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-6' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-6">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-6' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 7 -->
+        <div class="ma-an-nuts-card">
+            <img src="اسكالوب.png" alt="اسكالوب">
+            <h3>اسكالوب</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-7' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-7">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-7' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 8 -->
+        <div class="ma-an-nuts-card">
+            <img src="فستق بقشر.png" alt="فستق بقشر">
+            <h3>فستق بقشر</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-8' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-8">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-8' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 9 -->
+        <div class="ma-an-nuts-card">
+            <img src="قرمش.png.jpeg" alt="قرمش">
+            <h3>قرمش</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-9' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-9">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-9' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 10 -->
+        <div class="ma-an-nuts-card">
+            <img src="جبس.png.jpeg" alt="جبس">
+            <h3>جبس</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-10' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-10">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-10' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 11 -->
+        <div class="ma-an-nuts-card">
+            <img src="جبس صيني.png" alt="جبس صيني">
+            <h3>جبس صيني</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-11' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-11">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-11' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 12 -->
+        <div class="ma-an-nuts-card">
+            <img src="فستق بلدي مالح.png.jpeg" alt="فستق بلدي مالح">
+            <h3>فستق بلدي مالح</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-12' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-12">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-12' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 13 -->
+        <div class="ma-an-nuts-card">
+            <img src="كريك.png.jpeg" alt="كريك">
+            <h3>كريك</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-13' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-13">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-13' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 14 -->
+        <div class="ma-an-nuts-card">
+            <img src="فستق مدخن بلدي.png.jpeg" alt="فستق مدخن">
+            <h3>فستق بلدي مدخن</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-14' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-14">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-14' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 15 -->
+        <div class="ma-an-nuts-card">
+            <img src="كاجو.png" alt="كاجو">
+            <h3>كاجو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-15' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-15">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-15' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 16 -->
+        <div class="ma-an-nuts-card">
+            <img src="زهرة.png" alt="زهرة">
+            <h3>زهرة</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-16' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-16">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-16' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 17 -->
+        <div class="ma-an-nuts-card">
+            <img src="فستق حلو بلديpng.jpeg" alt="فستق بلدي حلو">
+            <h3>فستق بلدي حلو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-17' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-17">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-17' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 18 -->
+        <div class="ma-an-nuts-card">
+            <img src="بيض حمام.png" alt="بيض حمام">
+            <h3>بيض حمام</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-18' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-18">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-18' , 'plus')">+</button>
+
+            </div>
+        </div>
+        <!--المنتج 19-->
+        <div class="ma-an-nuts-card">
+            <img src="بزر مقشور.png" alt="بزر مقشور">
+            <h3>بزر مقشور</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-19' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-19">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-19' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 20-->
+        <div class="ma-an-nuts-card">
+            <img src="كناكر.png" alt="كناكر">
+            <h3>كناكر</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-20' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-20">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-20' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 21-->
+        <div class="ma-an-nuts-card">
+            <img src="سميريpng.jpeg" alt="سميري">
+            <h3>سميري</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-21' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-21">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-21' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 22-->
+        <div class="ma-an-nuts-card">
+            <img src="كوسا مدخن.png" alt="كوسا مدخن">
+            <h3>كوسا مدخن</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-22' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-22">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-22' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 23-->
+        <div class="ma-an-nuts-card">
+            <img src="قرع مدخن.png" alt="قرع مدخن">
+            <h3>قرع مدحن</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-23' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-23">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-23' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 24-->
+        <div class="ma-an-nuts-card">
+            <img src="لوزيةpng.jpeg" alt="لوزية">
+            <h3>لوزية</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-24' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-24">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-24' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 25-->
+        <div class="ma-an-nuts-card">
+            <img src="قباقيب.png" alt="قباقيب">
+            <h3>قباقيب</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-25' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-25">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-25' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 26-->
+        <div class="ma-an-nuts-card">
+            <img src="فستق حلبي .png.jpeg" alt="فستق حلبي  مالح">
+            <h3>فستق حلبي مالح</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-26' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-26">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-26' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 27-->
+        <div class="ma-an-nuts-card">
+            <img src="قلوبات.png" alt="قلوبات">
+            <h3>قلوبات</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-27' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-27">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-27' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 28-->
+        <div class="ma-an-nuts-card">
+            <img src="مخلوطة اكسترا.png" alt="مخلوطة اكسترا">
+            <h3>مخلوطة اكسترا</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-28' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-28">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-28' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 29-->
+        <div class="ma-an-nuts-card">
+            <img src="ميال.png" alt="بزر ميال">
+            <h3>بزر ميال</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-29' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-29">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-29' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+
+
+        <!--المنتج 30-->
+        <div class="ma-an-nuts-card">
+            <img src="قضامة مالحة.png.jpeg" alt="قضامة مالحة">
+            <h3>ضامة مالحة</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-29' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-29">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-29' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+        <!--المنتج 31-->
+        <div class="ma-an-nuts-card">
+            <img src="ذرة اسبانية.png.jpeg" alt="ذرة اسبانية">
+            <h3>ذرة اسبانية</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-29' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-29">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-29' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 32-->
+        <div class="ma-an-nuts-card">
+            <img src="مكاداميا.png.jpeg" alt="مكاديميا">
+            <h3>مكاديميا</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-29' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-29">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-29' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 33-->
+        <div class="ma-an-nuts-card">
+            <img src="رقائق الذرة الحلوة.png.jpeg" alt="رقائق الذرة الحلوة">
+            <h3>رقائق الذرة الحلوة</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-29' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-29">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-29' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+        <!--المنتج 34-->
+        <div class="ma-an-nuts-card">
+            <img src="رقائق الكاتشب مشكل.png.jpeg" alt="رقائق الكاتشب مشكل">
+            <h3>رقائق كاتشب مشكل</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-29' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-29">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-29' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 35-->
+        <div class="ma-an-nuts-card">
+            <img src="رقائق جبنة مشكلة.png.jpeg" alt="رقائق جبنة مشكل">
+            <h3>رقائق جبنة مشكل</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-29' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-29">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-29' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 36-->
+        <div class="ma-an-nuts-card">
+            <img src="رقائق خل وملح.png.jpeg" alt="رقائق الخل و الملح">
+            <h3>رقائق الخل و الملح</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-29' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-29">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-29' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!--المنتج 37-->
+        <div class="ma-an-nuts-card">
+            <img src="رقائق سوشي هالبينو.jpeg" alt="رقائق سوشي هالبينو">
+            <h3>رقائق سوشي هالبينو</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-29' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-29">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-29' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+        <!--المنتج 38-->
+        <div class="ma-an-nuts-card">
+            <img src="قرع جبنة.png.jpeg" alt="قرع جبنة">
+            <h3>قرع جبنة</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-29' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-mwalih-29">0</span>
+                <button class="btn-plus" onclick="changeQuantity('موالح معن' , 'qty-mwalih-29' , 'plus')">+</button>
+            </div>
+        </div>
+
+
+
+    </main>
+    <!-- ربط ملف الـ JavaScript الأساسي -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>

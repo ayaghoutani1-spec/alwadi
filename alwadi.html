@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مركز الوادي</title>
+
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com" rel="stylesheet">
+
+    <!--css code-->
+    <style>
+        /* تنسيق الصفحة العامة و الخلفية الكبرى */
+        body {
+            background-color: #11141a;
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* تصميم اطار الهاتف الذكي */
+        .phone-container {
+            width: 360px;
+            height: 740px;
+            background-color: #0b111e;
+            border-radius: 36px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+            overflow: hidden;
+            border: 4px solid #c5a059;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            /* لجعل تموضع زر Next دقيقاً بالنسبة للإطار */
+        }
+
+        /* إضافة الصورة كخلفية ممتدة و شفافة داخل إطار الهاتف */
+        .phone-container ::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 150px);
+            background-image: url('مركز الوادي.png.jpeg');
+            /* جعل الصورة تمتد بالطول وتغطي الشاشة بالكامل دون تشويه */
+            background-size: cover;
+            background-position: top center;
+            background-repeat: no-repeat;
+            /* التحكم بمدى الشفافية (0.12 تعني شفافة ومندمجة برقة مع الكحلي) */
+            opacity: 0.12;
+
+            /* إبقاء الخلفية بالأسفل تماماً خلف كل العناصر */
+            z-index: 1;
+
+        }
+
+        /* تنسيق زر التالي (Next) في أعلى اليمين */
+        .next-btn {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            color: #c5a059;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 700;
+            border: 1px solid #c5a059;
+            padding: 5px 14px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 10;
+        }
+
+        .next-btn:hover {
+            background-color: #c5a059;
+            color: #0b111e;
+            transform: translateX(-3px);
+            /* حركة خفيفة لجهة اليسار للتفاعل */
+        }
+
+        .next-btn svg {
+            width: 12px;
+            height: 12px;
+            fill: currentcolor;
+            /* يأخذ لون النص تلقائياً */
+        }
+
+        /* تنسيق شاشة التحميل و المحتوى بالداخل */
+        .splash-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-top: 20px;
+            position: relative;
+            z-index: 2;
+            /* إزاحة خفيفة لمنع التداخل مع الزر العلوي */
+        }
+
+        /* اخفاء حاوية اللوغو القديمة لان الصورة اصبحت بالخلفية  */
+        .logo-container {
+            display: none;
+        }
+
+
+        /* تنسيق النصوص باللون الذهبي و الأبيض */
+        .app-title-clear {
+            color: #c5a059 !important;
+            font-size: 26px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+            margin-bottom: 8px;
+        }
+
+        .app-subtitle-clear {
+            color: #ffffff !important;
+            font-size: 15px;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0 10px;
+        }
+
+        .app-subtitle-clear span {
+            color: #c5a059 !important;
+            font-weight: 900;
+        }
+
+
+
+        /* قسم معلومات التواصل أسفل الصفحة */
+        .contact-footer {
+            padding: 15px 0;
+            background: transparent !important;
+            background-image: none !important;
+            border-top: none !important;
+            text-align: center;
+            box-sizing: border-box;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 5;
+        }
+
+        .footer-location span {
+            color: #ffffff !important;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 15px;
+        }
+
+        .social-icon {
+            color: #c5a059;
+            transition: transform 0.3s ease, color 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: #c5a059;
+            transition: fill 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.15);
+        }
+
+        .social-icon:hover svg {
+            fill: #ffffff;
+        }
+
+        .whatsapp-numbers {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .whatsapp-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            direction: ltr;
+            transition: color 0.3s ease;
+        }
+
+        .whatsapp-link svg {
+            width: 16px;
+            height: 16px;
+            fill: #c5a059;
+            transition: fill 0.3s ease;
+        }
+
+        .whatsapp-link:hover {
+            color: #c5a059;
+        }
+
+        .whatsapp-link:hover svg {
+            fill: #ffffff;
+        }
+    </style>
+    <!--هنا انتهى تماما كود css-->
+
+</head>
+
+<body>
+
+    <!-- إطار الهاتف الذكي -->
+    <div class="phone-container">
+
+        <!-- زر Next إلى أعلى اليمين -->
+        <a href="products.html" class="next-btn">
+            <span>Next</span>
+            <svg viewBox="0 0 448 512">
+                <path
+                    d="M4.1 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H109.3l101.4-101.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
+            </svg>
+        </a>
+
+        <!-- قسم المحتوى و النصوص-->
+        <div class="splash-screen"
+            style="position: relative; z-index: 4; height: 100%; display: flex; flex-direction: column; justify-content: flex-start; align-items: center;">
+
+            <!-- قمنا بزيادة المسافة العلوية لكي ينزل النص تحت رسمة اللوجو والعبارة الذهبية تماماً دون تداخل -->
+            <div class="titles-container" style="margin-top: 45px; text-align: center;">
+                <h1 class="app-title-clear"
+                    style="color: #c5a059 !important; font-size: 26px; font-weight: 900; margin-bottom: 8px; font-family: sans-serif; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);">
+                    مركز الوادي</h1>
+                <p class="app-subtitle-clear"
+                    style="color: #ffffff !important; font-size: 15px; font-weight: 800; font-family: sans-serif; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8); letter-spacing: 0.3px;">
+                    الوكيل الحصري لـ <span style="color: #c5a059 !important; font-weight: 900;">موالح معن</span> وبسكويت
+                    <span style="color: #c5a059 !important; font-weight: 900;">تورن</span>
+                </p>
+            </div>
+
+        </div>
+
+        <!-- الفوتر السفلي داخل الموبايل تماماً -->
+        <footer class="contact-footer"
+            style="background: rgba(14, 21, 37, 0.95) !important; border-top: 1px solid rgba(236, 192, 125, 0.2); padding: 15px 0;">
+            <div class="footer-location"
+                style="color: #ffffff; margin-bottom: 12px; font-weight: bold; font-size: 14px;">
+            </div>
+
+            <!-- الفوتر السفلي (تأكد من إغلاق وسم الفوتر هنا وعرض أرقامك وروابطك النظيفة فقط) -->
+            <!-- </p> تذكر إغلاق الـ div الخاص بـ phone-container في نهاية ملفك بعد الفوتر -->
+
+    </div>
+
+
+    <!-- قسم روابط التواصل -->
+    <div class="contact-footer">
+        <!-- العنوان -->
+        <div class="footer-location"
+            style="margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+            <!-- تعديل لون إشارة الموقع للذهبي المتناسق مع اللوجو بدلاً من الأسود الغامق -->
+            <svg viewBox="0 0 384 512" style="width: 14px; height: 14px; fill: #c5a059 !important; flex-shrink: 0;">
+                <path
+                    d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0z" />
+            </svg>
+
+            <!-- تغليف النص بـ span وإعطائه اللون الأبيض الناصع والعريض مباشرة -->
+            <span
+                style="color: #ffffff !important; font-size: 14px; font-weight: bold; vertical-align: middle;">السويداء
+                - جنوب الإطفائية</span>
+        </div>
+
+        <!-- روابط السوشيال ميديا -->
+        <div class="social-links" style="margin-bottom: 10px;">
+
+            <!-- رابط الفيسبوك الحقيقي الخاص بمركز الوادي -->
+            <a href="https://www.facebook.com/share/16NAPGaFwLE/" target="_blank" class="social-icon" title="فيسبوك">
+                <svg viewBox="0 0 512 512">
+                    <path
+                        d="M80 0C35.8 0 0 35.8 0 80V432c0 44.2 35.8 80 80 80H291.8V300.5H220.4V224.1h71.4v-63.6c0-114.9 51.3-114.9 114.9-114.9c12.5 0 25.1 1.1 37.6 2.3v68.3h-40.4c-47.5 0-47.5 22.4-47.5 47.5v60.4h83.9l-11.4 76.4H356.4V512H432c44.2 0 80-35.8 80-80V80c0-44.2-35.8-80-80-80H80z" />
+                </svg>
+            </a>
+
+            <!-- رابط الانستغرام الحقيقي الخاص بمركز الوادي -->
+            <a href="https://www.instagram.com/al_wadi_center1?obrf=MXd4MXM5MTVzNmlsbA==" target="_blank"
+                class="social-icon" title="إنستغرام">
+                <svg viewBox="0 0 448 512">
+                    <path
+                        d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9 114.9-51.3 114.9-114.9-51.3-114.9-114.9-114.9zm0 186.6c-39.6 0-71.7-32.1-71.7-71.7s32.1-71.7 71.7-71.7 71.7 32.1 71.7 71.7-32.1 71.7-71.7 71.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9s-58-34.5-93.9-36.2c-36.9-2.1-147-2.1-183.9 0-35.9 1.7-67.7 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 36.9-2.1 147 0 183.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.5 93.9 36.2c36.9 2.1 147 2.1 183.9 0 35.9-1.7 67.7-9.9 93.9-36.2s34.5-58 36.2-93.9c2.1-36.9 2.1-147 0-183.9zm-46.4 231.8c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
+                </svg>
+            </a>
+
+        </div>
+
+        <!-- أرقام الواتساب -->
+        <div class="whatsapp-numbers"
+            style="color: #ffffff !important; font-size: 14px; font-weight: bold; line-height: 1.6;">
+
+            <!-- السطر الأول المعدل (بروتوكول التطبيق المباشر) -->
+            <!-- السطر الأول بعد إضافة dir="ltr" لتعديل اتجاه الرقم -->
+            <div style="margin-bottom: 5px; direction: ltr; text-align: right;">
+                <a href="whatsapp://send?phone=963992351754" target="_blank"
+                    style="color: #ffffff !important; text-decoration: none; direction: ltr; display: inline-block;">
+                    <span dir="ltr">+963 992 351 754</span> <i class="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
+
+            <!-- السطر الثاني المعدل (رابط الويب الرسمي) -->
+            <div style="margin-bottom: 5px; direction: ltr; text-align: right;">
+                <a href="whatsapp://send?phone=963951461079" target="_blank"
+                    style="color: #ffffff !important; text-decoration: none; direction: ltr; display: inline-block;">
+                    <span dir="ltr">+963 951 461 079</span> <i class="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

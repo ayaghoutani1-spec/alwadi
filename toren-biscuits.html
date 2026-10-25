@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بسكوت تورن- كل المنتجات </title>
+    <!-- ربط ملف الـ CSS الأساسي -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- تنسيق داخلي لترتيب الصور والأسماء وأزرار الكمية عمودياً -->
+    <style>
+        .biscuits-grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            /* 4 أعمدة متساوية */
+            gap: 25px;
+            padding: 30px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 380px !important;
+        }
+
+        .toren-biscuits-card {
+            display: flex;
+            flex-direction: column;
+            /* ترتيب عمودي */
+            align-items: center;
+            /* توسيط المحتوى */
+            justify-content: space-between;
+            /* توزيع المساحة بالتساوي في الأسفل */
+            background-color: #111f3b !important;
+            border-radius: 12px !important;
+            border: 1px solid #e0e0e0 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+            padding: 15px !important;
+            transition: transform 0.2s ease !important;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .toren-biscuits-card:hover {
+            transform: translateY(-5px) !important;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .toren-biscuits-card img {
+            width: 100% !important;
+            max-width: 150px;
+            height: 150px !important;
+            object-fit: contain !important;
+            border-radius: 8px !important;
+            margin-bottom: 12px !important;
+        }
+
+        .toren-biscuits-card h3 {
+            margin: 0 0 12px 0 !important;
+            font-size: 1rem !important;
+            color: #ffffff !important;
+            font-weight: 600 !important;
+            min-height: 40px;
+            /* لتوحيد المسافات إذا كان الاسم طويلاً */
+            display: flex;
+            align-items: center;
+        }
+
+        /* تنسيق أزرار الكمية ليطابق تصميم الصفحة الأولى بشكل مصغر وأنيق */
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: auto;
+            /* يدفع الأزرار دائماً لتكون في قاع الكرت */
+        }
+
+        .btn-minus,
+        .btn-plus {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 30px;
+            height: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .btn-minus:hover,
+        .btn-plus:hover {
+            background-color: #e0e0e0;
+        }
+
+        .quantity-num {
+            font-size: 1rem;
+            font-weight: bold;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .btn-back {
+            display: block;
+            width: 160px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #1976d2;
+            color: white;
+            text-decoration: none !important;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            transition: 0.2s;
+        }
+
+        .btn-back :hover {
+            color: #ffffff !important;
+            text-decoration: none !important;
+            background-color: #115293;
+        }
+
+        .btn-back :focus {
+            color: #ffffff !important;
+            text-decoration: none !important;
+            outline: none;
+        }
+
+        .btn-back :active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="main-header">
+        <h1>منتجات بسكوت تورن</h1>
+        <p>تصفح تشكيلتنا الكاملة والمميزة</p>
+
+        <!-- شريط البحث التفاعلي الفوري لصفحة البسكوت -->
+        <div class="search-container" style="position: relative; z-index: 9999;">
+            <input type="text" id="torenSearchInput" placeholder="ابحث عن منتج..." onkeyup="
+        let query = document.getElementById('torenSearchInput').value.trim().toLowerCase();
+        let items = document.getElementsByClassName('toren-biscuits-card');
+        
+        for (let i = 0; i < items.length; i++) {
+            let h3 = items[i].getElementsByTagName('h3')[0];
+            if (h3) {
+                let name = h3.textContent || h3.innerText;
+                if (name.toLowerCase().indexOf(query) > -1) {
+                    items[i].style.setProperty('display', '', 'important');
+                } else {
+                    items[i].style.setProperty('display', 'none', 'important');
+                }
+            }
+        }
+    ">
+        </div>
+
+
+
+    </header>
+    <!-- زر العودة لصفحة المنتجات -->
+    <div class="btn-back">
+        <a href="products.html">العودة لصفحة المنتجات</a>
+    </div>
+
+    <main class="biscuits-grid-container">
+
+        <!-- المنتج 1 -->
+        <div class="toren-biscuits-card">
+            <img src="snap Hazelnut.png.jpeg" alt="Snap HazelNut">
+            <h3>Snap HazelNut</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-1' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-1">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-1' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 2 -->
+        <div class="toren-biscuits-card">
+            <img src="snap chocolate.png.jpeg" alt="Snap Chocolate">
+            <h3>Snap Chocolate</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-2' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-2">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-2' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 3 -->
+        <div class="toren-biscuits-card">
+            <img src="snap coconut.png.jpeg" alt="Snap Coconut">
+            <h3>Snap Coconut</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-3' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-3">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-3' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 4 -->
+        <div class="toren-biscuits-card">
+            <img src="waffers cocoa chocolate.png.jpeg" alt="Waffers Cocoa Chocolate">
+            <h3>Waffers Cocoa Chocolate</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-4' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-4">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-4' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 5 -->
+        <div class="toren-biscuits-card">
+            <img src="waffers crunchy strawberry.png.jpeg" alt="Waffers Crunchy Strawberry">
+            <h3>Waffers Crunchy Strawberry</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-5' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-5">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-5' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 6 -->
+        <div class="toren-biscuits-card">
+            <img src="waffers crunchy bubble gum.png.jpeg" alt="Waffers Crunchy Bubble Gum">
+            <h3>Waffers Crunchy Bubble Gum</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-6' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-6">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-6' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 7 -->
+        <div class="toren-biscuits-card">
+            <img src="waffers crunchy banana.png.jpeg" alt="Waffers Crunchy Banana">
+            <h3>Waffers Crunchy Banana</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-7' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-7">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-7' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 8 -->
+        <div class="toren-biscuits-card">
+            <img src="waffers crunchy lemon.png.jpeg" alt="Wffers Crunchy Lemon">
+            <h3>Wffers Crunchy Lemon</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-8' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-8">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-8' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 9 -->
+        <div class="toren-biscuits-card">
+            <img src="waffers crunchy coconut.png.jpeg" alt="Waffers Crunchy Coconut">
+            <h3>Waffers Crunchy Coconut</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-9' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-9">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-9' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 10 -->
+        <div class="toren-biscuits-card">
+            <img src="waffers tamam dark chocolate.png.jpeg" alt="Waffers Tamam Dark Chocolate">
+            <h3>Waffers Tamam Dark Chocolate</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-10' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-10">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-10' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 11 -->
+        <div class="toren-biscuits-card">
+            <img src="waffers nusso hazelnut.png.jpeg" alt="Waffers Nusso Hazelnut">
+            <h3>Waffers Nusso Hazelnut</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-11' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-11">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-11' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 12 -->
+        <div class="toren-biscuits-card">
+            <img src="waffers fingers banana.png.jpeg" alt="Waffers Finger Banana">
+            <h3>Waffers Finger Banana</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-12' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-12">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-12' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 13 -->
+        <div class="toren-biscuits-card">
+            <img src="ويفر تمام.png" alt="Waffers Tamam Double Chocolate">
+            <h3>Waffers Tamam Double Chocolate</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-13' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-13">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-13' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 14 -->
+        <div class="toren-biscuits-card">
+            <img src="waffers carre strawberry.png.jpeg" alt="Waffers Caree Strawberry">
+            <h3>Waffers Caree Strawberry</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-14' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-14">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-14' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 15 -->
+        <div class="toren-biscuits-card">
+            <img src="waffers carre milk.png.jpeg" alt="Waffers Caree Milk">
+            <h3>Waffers Caree Milk</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-15' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-15">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-15' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 16 -->
+        <div class="toren-biscuits-card">
+            <img src="waffers carre hazelnut.png.jpeg" alt="Waffers Caree Hazelnut">
+            <h3>Waffers Caree Hazelnut</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-16' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-16">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-16' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 17 -->
+        <div class="toren-biscuits-card">
+            <img src="delisso hazelnut.png.jpeg" alt="Delisso Hazelnut">
+            <h3>Delisso Hazelnut</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-17' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-17">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-17' , 'plus')">+</button>
+            </div>
+        </div>
+
+        <!-- المنتج 18 -->
+        <div class="toren-biscuits-card">
+            <img src="delisso coconut.png.jpeg" alt="Delisso Coconut">
+            <h3>Delisso Coconut</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-18' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-18">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-18' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+        <!-- المنتج 19 -->
+        <div class="toren-biscuits-card">
+            <img src="delisso milk.png.jpeg" alt="Delisso Milk">
+            <h3>Delisso Milk</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-19' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-19">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-19' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 20 -->
+        <div class="toren-biscuits-card">
+            <img src="delisso cocoa.png.jpeg" alt="Delisso Cocoa">
+            <h3>Delisso Cocoa</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-20' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-20">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-20' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+        <!-- المنتج 21 -->
+        <div class="toren-biscuits-card">
+            <img src="delisso strawberry.png.jpeg" alt="Delisso Strawberry">
+            <h3>Delisso Strawberry</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-21' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-21">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-21' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+        <!-- المنتج 22 -->
+        <div class="toren-biscuits-card">
+            <img src="delisso cocoa chocolate.png.jpeg" alt="Delisso Cocoa Chocolate">
+            <h3>Delisso Cocoa Chocolate</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-22' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-22">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-22' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 23 -->
+        <div class="toren-biscuits-card">
+            <img src="ديليشو فينفير.png" alt="Delicious Finger">
+            <h3>Delicious Finger</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-23' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-23">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-23' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+        <!-- المنتج 24 -->
+        <div class="toren-biscuits-card">
+            <img src="cococs crunchy strawberry.png.jpeg" alt="Crunchy Strawberry">
+            <h3>Crunchy Strawberry</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-24' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-24">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-24' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 25 -->
+        <div class="toren-biscuits-card">
+            <img src="cococos crunchy coconut.png.jpeg" alt="Crunchy Coconut">
+            <h3>Crunchy Coconut</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-25' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-25">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-25' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+
+        <!-- المنتج 26 -->
+        <div class="toren-biscuits-card">
+            <img src="cococos dark chocolate.png.jpeg" alt="Cococos 50g Dark Chocolate">
+            <h3>Cococos 50g Dark Chocolate</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-26' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-26">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-26' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 27 -->
+        <div class="toren-biscuits-card">
+            <img src="كوكوز.png.jpeg" alt="Cococos 50g White Chocolate">
+            <h3>Cococos 50g White Chocolate</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-27' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-27">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-27' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 28 -->
+        <div class="toren-biscuits-card">
+            <img src="كوكوز 500غ.png" alt="Cococos 500g White Chocolate">
+            <h3>Cococos 500g White Chocolate</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-22' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-22">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-22' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+
+        <!-- المنتج 29 -->
+        <div class="toren-biscuits-card">
+            <img src="whomp coconut.png.jpeg" alt="Whomp Coconut">
+            <h3>Whomp Coconut</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-29' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-29">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-29' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 30 -->
+        <div class="toren-biscuits-card">
+            <img src="whomp hazelnut.png.jpeg" alt="Whomp Hazelnut">
+            <h3>Whomp Hazelnut</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-30' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-30">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-30' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 31 -->
+        <div class="toren-biscuits-card">
+            <img src="whomp strawberry.png.jpeg" alt="Whomp Strawberry">
+            <h3>Whomp Strawberry</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-31' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-31">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-31' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+
+
+        <!-- المنتج 32 -->
+        <div class="toren-biscuits-card">
+            <img src="whomp pistachio.png.jpeg" alt="Whomp Pistachio">
+            <h3>Whomp Pistachio</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-32' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-32">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-32' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 33 -->
+        <div class="toren-biscuits-card">
+            <img src="whomp milk.png.jpeg" alt="Whomp Milk">
+            <h3>Whomp Milk</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-33' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-33">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-33' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 34 -->
+        <div class="toren-biscuits-card">
+            <img src="whomp cocoa.png.jpeg" alt="Whomp Cocoa">
+            <h3>Whomp Cocoa</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-34' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-34">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-34' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 35 -->
+        <div class="toren-biscuits-card">
+            <img src="della blue.png.jpeg" alt="Della Blue">
+            <h3>Della Blue</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-35' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-35">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-35' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+        <!-- المنتج 36 -->
+        <div class="toren-biscuits-card">
+            <img src="della cookie.png.jpeg" alt="Della Cookie">
+            <h3>Della Cookie</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-36' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-36">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-36' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 37 -->
+        <div class="toren-biscuits-card">
+            <img src="della red.png.jpeg" alt="Della Red">
+            <h3>Della Red</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-37' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-37">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-37' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+
+        <!-- المنتج 38 -->
+        <div class="toren-biscuits-card">
+            <img src="strike almond.png.jpeg" alt="Strike Almond">
+            <h3>Strike Almond</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-38' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-38">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-38' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 39 -->
+        <div class="toren-biscuits-card">
+            <img src="strike dark.png.jpeg" alt="Strike Dark">
+            <h3>Strike Dark</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-39' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-39">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-39' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 40 -->
+        <div class="toren-biscuits-card">
+            <img src="strike pistachio.png.jpeg" alt="Strike Pistachio">
+            <h3>Strike Pistachio</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-40' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-40">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-40' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 41 -->
+        <div class="toren-biscuits-card">
+            <img src="strike coconut.png" alt="Strike Coconut">
+            <h3>Strike Coconut</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-41' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-41">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-41' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 42 -->
+        <div class="toren-biscuits-card">
+            <img src="tron cookies.png.jpeg" alt="Tron Cookies">
+            <h3>Tron Cookies</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-42' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-42">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-42' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+        <!-- المنتج 43 -->
+        <div class="toren-biscuits-card">
+            <img src="tron pistachio.png.jpeg" alt="Tron Pistachio">
+            <h3>Tron Pistachio</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-43' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-43">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-43' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+        <!-- المنتج 44 -->
+        <div class="toren-biscuits-card">
+            <img src="tron hazelnut.png.jpeg" alt="Tron Hazelnut">
+            <h3>Tron Hazelnut</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-44' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-44">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-44' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 45 -->
+        <div class="toren-biscuits-card">
+            <img src="corners chocolate.png.jpeg" alt="Corners Chocolate">
+            <h3>Corners Chocolate</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-45' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-45">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-45' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 46 -->
+        <div class="toren-biscuits-card">
+            <img src="corners strawberry.png.jpeg" alt="Corners Strawberry">
+            <h3>Corners Strawberry</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-46' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-46">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-46' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+        <!-- المنتج 47 -->
+        <div class="toren-biscuits-card">
+            <img src="corners sweet chocolate.png.jpeg" alt="Corners Sweet Chocolate">
+            <h3>Corners Sweet Chocolate</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-47' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-47">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-47' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 48 -->
+        <div class="toren-biscuits-card">
+            <img src="mr,bite white milk.png.jpeg" alt="Mr.Bite White Milk">
+            <h3>Mr.Bite White Milk</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-48' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-48">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-48' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 49 -->
+        <div class="toren-biscuits-card">
+            <img src="mr,bite hazelnut.png.jpeg" alt="Mr.Bite Hazelnut">
+            <h3>Mr.Bite Hazelnut</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-49' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-49">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-49' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+        <!-- المنتج 50 -->
+        <div class="toren-biscuits-card">
+            <img src="mr,bite pistachio.png.jpeg" alt="Mr.Bite Pistachio">
+            <h3>Mr.Bite Pistachio</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-50' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-50">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-50' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 51 -->
+        <div class="toren-biscuits-card">
+            <img src="mr,bite dark chocolate.png.jpeg" alt="Mr.Bite Dark Chocolate">
+            <h3>Mr.Bite Dark Chocolate</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-51' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-51">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-51' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+        <!-- المنتج 52 -->
+        <div class="toren-biscuits-card">
+            <img src="mr,bite choco dark.jpeg" alt="Mr.Bite Choco Dark">
+            <h3>Mr.Bite Choco Dark</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-52' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-52">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-52' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+
+        <!-- المنتج 53 -->
+        <div class="toren-biscuits-card">
+            <img src="mr,bite choco milk.png.jpeg" alt="Mr.Bite Choco Milk">
+            <h3>Mr.Bite Choco Milk</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-53' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-53">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-53' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 54 -->
+        <div class="toren-biscuits-card">
+            <img src="groani coconut.png.jpeg" alt="Groani Coconut">
+            <h3>Groani Coconut</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-54' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-54">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-54' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 55 -->
+        <div class="toren-biscuits-card">
+            <img src="pixel pistachio.png" alt="Pixel Pistachio">
+            <h3>Pixel Pistachio</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-55' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-55">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-55' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+        <!-- المنتج 56 -->
+        <div class="toren-biscuits-card">
+            <img src="pixel hazelnut.png.jpeg" alt="Pixel Hazelnut">
+            <h3>Pixel Hazelnut</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-56' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-56">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-56' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+        <!-- المنتج 57 -->
+        <div class="toren-biscuits-card">
+            <img src="pixel coconut.png.jpeg" alt="Pixel Coconut">
+            <h3>Pixel Coconut</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-57' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-57">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-57' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+
+        <!-- المنتج 58 -->
+        <div class="toren-biscuits-card">
+            <img src="pixel black-white.jpeg" alt="Pixel Black & White">
+            <h3>Pixel Black & White</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-58' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-58">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-58' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 59 -->
+        <div class="toren-biscuits-card">
+            <img src="pacimo caramel.png.jpeg" alt="Pacimo Caramel">
+            <h3>Pacimo Caramel</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-59' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-59">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-59' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+
+        <!-- المنتج 60 -->
+        <div class="toren-biscuits-card">
+            <img src="pacimo banana.png.jpeg" alt="Pacimo Banana">
+            <h3>Pacimo Banana</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-60' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-60">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-60' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+        <!-- المنتج 61 -->
+        <div class="toren-biscuits-card">
+            <img src="pacimo orange.png.jpeg" alt="Pacimo Orange">
+            <h3>Pacimo Orange</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-61' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-61">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-61' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+        <!-- المنتج 62 -->
+        <div class="toren-biscuits-card">
+            <img src="pacimo strawberry.png.jpeg" alt="Pacimo Strawberry">
+            <h3>Pacimo Strawberry</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-62' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-62">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-62' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 63 -->
+        <div class="toren-biscuits-card">
+            <img src="classic milky.png.jpeg" alt="Classic Milky">
+            <h3>Classic Milky</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-63' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-63">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-63' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 64 -->
+        <div class="toren-biscuits-card">
+            <img src="classic peanut.png.jpeg" alt="Classic Peanut">
+            <h3>Classic Peanut</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-64' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-64">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-64' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+
+        <!-- المنتج 65 -->
+        <div class="toren-biscuits-card">
+            <img src="كلاسيكال الموند.png" alt="Classic Almond">
+            <h3>Classic Almond</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-65' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-65">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-65' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+        <!-- المنتج 66 -->
+        <div class="toren-biscuits-card">
+            <img src="gringo peanut.png.jpeg" alt="Gringo Peanut">
+            <h3>Gringo Peanut</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-66' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-66">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-66' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 67 -->
+        <div class="toren-biscuits-card">
+            <img src="كووف كيك.png" alt="Goov Kek Cake">
+            <h3>Goov Kek Cake</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-67' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-67">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-67' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 68 -->
+        <div class="toren-biscuits-card">
+            <img src="كلايف.png" alt="Clife">
+            <h3>Clife</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-68' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-68">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-68' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+        <!-- المنتج 69 -->
+        <div class="toren-biscuits-card">
+            <img src="بيس شوك.png" alt="BisChok">
+            <h3>BisChok</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-69' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-69">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-69' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 70 -->
+        <div class="toren-biscuits-card">
+            <img src="شوكولاته سائلة.png.jpeg" alt="SokNut">
+            <h3>SokNut</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-67' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-67">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-67' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 71 -->
+        <div class="toren-biscuits-card">
+            <img src="روكو.png" alt="Roco">
+            <h3>Roco</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-71' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-71">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-71' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+        <!-- المنتج 72 -->
+        <div class="toren-biscuits-card">
+            <img src="شوكو دينو.jpeg" alt="Choco Dino">
+            <h3>Choco Dino</h3>
+            <div class="quantity-control">
+                <button class="btn-minus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-72' , 'minus')">-</button>
+                <span class="quantity-num" id="qty-toren-72">0</span>
+                <button class="btn-plus" onclick="changeQuantity('بسكوت تورن' , 'qty-toren-72' , 'plus')">+</button>
+
+            </div>
+        </div>
+
+
+
+
+    </main>
+    <!-- ربط ملف الـ JavaScript الأساسي -->
+    <script src="script.js"></script>
+</body>
+
+</html>
