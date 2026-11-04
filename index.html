@@ -60,44 +60,38 @@
 
         }
 
-        /* الحاوية الجديدة لتوسيط الزر أفقياً ومنحه مسافة عمودية مناسبة */
-        .btn-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        margin-top: 40px;       /* مسافة فارغة تفصله عن شعار الوادي من الأعلى */
-        margin-bottom: 40px;    /* مسافة فارغة تفصله عن نص السويداء من الأسفل */
+        /* تنسيق زر التالي (Next) في أعلى اليمين */
+        .next-btn {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            color: #c5a059;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 700;
+            border: 1px solid #c5a059;
+            padding: 5px 14px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 10;
         }
 
-        /* تنسيق زر التالي بعد نقله للمنتصف وتغيير اسمه */
-        .next-btn {
-        color: #c5a059;
-        text-decoration: none;
-        font-size: 16px;
-        font-weight: 700;
-        border: 1px solid #c5a059;
-        padding: 8px 20px;       /* كبرنا الحشو قليلاً ليناسب كلمة "انقر هنا" */
-        border-radius: 20px;
-        transition: all 0.3s ease;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        direction: rtl;         /* لجعل السهم يظهر على يسار الكلمة بشكل صحيح */
-       }
+        .next-btn:hover {
+            background-color: #c5a059;
+            color: #0b111e;
+            transform: translateX(-3px);
+            /* حركة خفيفة لجهة اليسار للتفاعل */
+        }
 
-      .next-btn:hover {
-      background-color: #c5a059;
-      color: #0b111e;
-      transform: scale(1.05); /* تأثير تكبير خفيف بدلاً من التحريك الجانبي ليناسب المنتصف */
-      }
-
-     .next-btn svg {
-     width: 12px;
-     height: 12px;
-     fill: currentcolor;
-     transform: rotate(180deg); /* قلب اتجاه السهم ليصبح لليسار متناسقاً مع الكلمة العربية */
-    }
+        .next-btn svg {
+            width: 12px;
+            height: 12px;
+            fill: currentcolor;
+            /* يأخذ لون النص تلقائياً */
+        } 
 
 
         /* تنسيق شاشة التحميل و المحتوى بالداخل */
