@@ -238,101 +238,115 @@
 
         <!-- كود الجافا سكريبت النظيف جداً بدون توليد روابط معقدة -->
         <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                function updateLiveInvoiceDirectly() {
-                    const tableBody = document.getElementById("cart-table-body");
-                    const totalElement = document.getElementById("cart-total-qty");
+    document.addEventListener('DOMContentLoaded', () => {
+        function updateLiveInvoiceDirectly() {
+            const tableBody = document.getElementById("cart-table-body");
+            const totalElement = document.getElementById("cart-total-qty");
 
-                    if (!tableBody) return;
+            if (!tableBody) return;
 
-                    let totalQty = 0;
-                    tableBody.innerHTML = "";
+            let totalQty = 0;
+            tableBody.innerHTML = "";
 
-                    for (let i = 0; i < localStorage.length; i++) {
-                        let key = localStorage.key(i);
+            for (let i = 0; i < localStorage.length; i++) {
+                let key = localStorage.key(i);
 
-                        if (key && key.startsWith('qty-') && !key.endsWith('_name')) {
-                            let qty = parseInt(localStorage.getItem(key)) || 0;
-                            let arabicName = localStorage.getItem(key + '_name') || "صنف غير معرف";
+                if (key && key.startsWith('qty-') && !key.endsWith('_name')) {
+                    let qty = parseInt(localStorage.getItem(key)) || 0;
+                    let arabicName = localStorage.getItem(key + '_name') || "صنف غير معرف";
 
-                            if (qty > 0) {
-                                totalQty += qty;
-                                let row = "<tr>" +
-                                    "<td>" + arabicName + "</td>" +
-                                    "<td style='text-align: center;'>" + qty + "</td>" +
-                                    "<td style='text-align: left;'>طرد</td>" +
-                                    "</tr>";
-                                tableBody.innerHTML += row;
-                            }
-                        }
-                    }
-
-                    if (totalQty === 0) {
-                        tableBody.innerHTML = "<tr><td colspan='3' style='text-align:center; color:#888; padding: 20px 0;'>السلة فارغة، يرجى العودة واختيار أصناف.</td></tr>";
-                    }
-
-                    if (totalElement) {
-                        totalElement.innerText = totalQty + " طرود";
+                    if (qty > 0) {
+                        totalQty += qty;
+                        let row = "<tr>" +
+                            "<td>" + arabicName + "</td>" +
+                            "<td style='text-align: center;'>" + qty + "</td>" +
+                            "<td style='text-align: left;'>طرد</td>" +
+                            "</tr>";
+                        tableBody.innerHTML += row;
                     }
                 }
-
-                updateLiveInvoiceDirectly();
-            });
-
-            // دالة تجهيز نص الفاتورة فقط وضخها داخل الفورم
-            function buildWadiMessageBeforeSend(event) {
-                var nameVal = document.getElementById('username') ? document.getElementById('username').value.trim() : "";
-                var phoneVal = document.getElementById('phone') ? document.getElementById('phone').value.trim() : "";
-                var locVal = document.getElementById('location') ? document.getElementById('location').value.trim() : "";
-
-                if (nameVal === "" || phoneVal === "" || locVal === "") {
-                    alert("يرجى ملء جميع البيانات أولاً!");
-                    event.preventDefault();
-                    return false;
-                }
-
-                var messageText = "طلب شراء جديد - مركز الوادي\n";
-                messageText += "الاسم: " + nameVal + "\n";
-                messageText += "رقم الهاتف: " + phoneVal + "\n";
-                messageText += "العنوان: " + locVal + "\n";
-                messageText += "----------------------------\n";
-                messageText += "تفاصيل الطلبية:\n\n";
-
-                var hasItems = false;
-                var totalQty = 0;
-
-                for (var i = 0; i < localStorage.length; i++) {
-                    var key = localStorage.key(i);
-                    if (key && key.startsWith('qty-') && !key.endsWith('_name')) {
-                        var qty = parseInt(localStorage.getItem(key)) || 0;
-                        var arabicName = localStorage.getItem(key + '_name') || "صنف غير معرف";
-
-                        if (qty > 0) {
-                            hasItems = true;
-                            totalQty += qty;
-                            messageText += "- " + arabicName + ": " + qty + " طرد\n";
-                        }
-                    }
-                }
-
-                messageText += "\n----------------------------\n";
-                messageText += "إجمالي الكمية: " + totalQty + " طرود";
-
-                if (!hasItems) {
-                    alert("سلة المشتريات فارغة!");
-                    event.preventDefault();
-                    return false;
-                }
-
-                // نضع النص الصافي داخل الحقل المخفي، والفورم سيتكفل بتشفيره وإرساله تلقائياً
-                var hiddenInput = document.getElementById('whatsapp-text-input');
-                if (hiddenInput) {
-                    hiddenInput.value = messageText;
-                }
-
-                return true; // تفعيل إرسال الفورم الفوري
             }
-        </script>
-</body>
+
+            if (totalQty === 0) {
+                tableBody.innerHTML = "<tr><td colspan='3' style='text-align:center; color:#888; padding: 20px 0;'>السلة فارغة، يرجى العودة واختيار أصناف.</td></tr>";
+            }
+
+            if (totalElement) {
+                totalElement.innerText = totalQty + " طرود";
+            }
+        }
+
+        updateLiveInvoiceDirectly();
+    });
+
+    // دالة تجهيز نص الفاتورة وإرسالها المباشر عبر رابط قياسي مضمون لفتح شات مركز الوادي
+    function buildWadiMessageBeforeSend(event) {
+        // منع السلوك الافتراضي للفورم للتحكم بالإرسال برمجياً وضمان فتحه في شات مركز الوادي فوراً
+        event.preventDefault();
+
+        var nameVal = document.getElementById('username') ? document.getElementById('username').value.trim() : "";
+        var phoneVal = document.getElementById('phone') ? document.getElementById('phone').value.trim() : "";
+        var locVal = document.getElementById('location') ? document.getElementById('location').value.trim() : "";
+
+        if (nameVal === "" || phoneVal === "" || locVal === "") {
+            alert("يرجى ملء جميع البيانات أولاً!");
+            return false;
+        }
+
+        var messageText = "طلب شراء جديد - مركز الوادي\n";
+        messageText += "الاسم: " + nameVal + "\n";
+        messageText += "رقم الهاتف: " + phoneVal + "\n";
+        messageText += "العنوان: " + locVal + "\n";
+        messageText += "----------------------------\n";
+        messageText += "تفاصيل الطلبية:\n\n";
+
+        var hasItems = false;
+        var totalQty = 0;
+
+        for (var i = 0; i < localStorage.length; i++) {
+            var key = localStorage.key(i);
+            if (key && key.startsWith('qty-') && !key.endsWith('_name')) {
+                var qty = parseInt(localStorage.getItem(key)) || 0;
+                var arabicName = localStorage.getItem(key + '_name') || "صنف غير معرف";
+
+                if (qty > 0) {
+                    hasItems = true;
+                    totalQty += qty;
+                    messageText += "- " + arabicName + ": " + qty + " طرد\n";
+                }
+            }
+        }
+
+        messageText += "\n----------------------------\n";
+        messageText += "إجمالي الكمية: " + totalQty + " طرود";
+
+        if (!hasItems) {
+            alert("سلة المشتريات فارغة!");
+            return false;
+        }
+
+        // ====================================================
+        // التعديل السحري لضمان فتح شات مركز الوادي مباشرة لجميع الهواتف
+        // ====================================================
+        
+        // رقم هاتف مركز الوادي بالصيغة الدولية المعتمدة (بدول أصفار وبدون زائد)
+        var wadiCompanyPhone = "963931668374"; 
+        
+        // تشفير النص المكتوب ليكون متوافقاً وآمناً مع روابط الإنترنت القياسية
+        var encodedText = encodeURIComponent(messageText);
+        
+        // صياغة رابط الواتساب القياسي الحديث لفتح المحادثة وضخ الفاتورة فوراً
+        var whatsappUrl = "https://wa.me" + wadiCompanyPhone + "?text=" + encodedText;
+
+        // تفريغ السلة من الذاكرة المحلية (localStorage) بعد إتمام الطلب بنجاح (اختياري، يمكنكِ إزالته إن لم ترغبي بتصفير السلة فوراً)
+        // localStorage.clear(); 
+
+        // توجيه المتصفح لفتح المحادثة المباشرة في تطبيق الواتساب
+        window.location.href = whatsappUrl;
+
+        return true;
+    }
+</script>
+
 
 </html>
