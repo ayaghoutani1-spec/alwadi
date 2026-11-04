@@ -330,16 +330,25 @@
         // ====================================================
         
         // 1. رقم مركز الوادي المعتمد والظاهر في الصورة
+        // رقم مركز الوادي بالصيغة الدولية الصحيحة
         var wadiCompanyPhone = "963931668374"; 
 
-       // 2. تشفير النص بشكل آمن
+       // تشفير نص الفاتورة
        var encodedText = encodeURIComponent(messageText);
 
-      // 3. الرابط الصحيح 100% مع إضافة السلاش "/" والسلاسل النصية بشكل صحيح
-      var whatsappUrl = "https://wa.me" + wadiCompanyPhone + "?text=" + encodedText;
+      // الرابط المباشر البديل الذي يجبر نظام الهاتف على فتح تطبيق الواتساب فوراً دون المرور بالمتصفح
+      var whatsappAppUrl = "whatsapp://send?phone=" + wadiCompanyPhone + "&text=" + encodedText;
 
-      // 4. التوجيه المباشر لفتح محادثة العميل
-      window.location.href = whatsappUrl;
+     // الرابط القياسي الاحتياطي
+     var whatsappWebUrl = "https://wa.me" + wadiCompanyPhone + "?text=" + encodedText;
+
+     // محاولة توجيه الهاتف لفتح التطبيق مباشرة، وإذا لم يستجب يفتح رابط الويب
+     try {
+     window.location.href = whatsappAppUrl;
+    } 
+     catch (e) {
+      window.location.href = whatsappWebUrl;
+    }
 
 
         return true;
