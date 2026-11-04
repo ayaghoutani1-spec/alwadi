@@ -17,6 +17,7 @@ body {
     min-height: 100vh;
     border: 3px solid #d4af37;
     border-radius: 20px;
+
 }
 
 .product-container {
@@ -30,25 +31,15 @@ body {
 .brand-section {
     flex: 1;
     min-width: 300px;
-    height: auto;
-    min-height: 100vh;
-    border: 2px solid #d4af37;
     background: #1b2d4d;
     padding: 20px;
-    padding-bottom: 30px;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    box-sizing: border-box;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-items: center;
 }
 
 /* تنسيق حاوية عنوان القسم والشعار */
 .section-title-container {
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
     text-align: center;
@@ -59,7 +50,9 @@ body {
 /* الكود السحري لتصغير شعار موالح معن الكبير */
 .section-title-container img {
     width: 140px;
+    /* التحكم في حجم الشعار (صغير ومتناسق) */
     height: auto;
+    /* المحافظة على الأبعاد بدون تشويه */
     object-fit: contain;
 }
 
@@ -78,7 +71,6 @@ body {
     border-radius: 15px;
     margin-bottom: 25px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
 }
 
 .brand-logo-container {
@@ -102,20 +94,22 @@ body {
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 15px;
     margin-bottom: 20px;
-    width: 100%;
 }
 
 /* بطاقة المنتج المربعة الأنيقة */
 .product-card {
     background-color: #70afef;
     border-radius: 15px;
-    padding: 20px;
+    padding: 25px;
     text-align: center;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     border: 1px solid #b3d1ff;
+    color: #6388ad;
+    text-align: center;
+    color: #1a365d;
     margin-bottom: 15px;
 }
 
@@ -148,7 +142,6 @@ body {
     background-color: #f1f3f5;
     border-radius: 25px;
     padding: 2px;
-    width: 100%;
 }
 
 .btn-minus,
@@ -204,26 +197,25 @@ body {
 /* ==================================================== */
 /* أكواد مخصصة لصفحة ma'an-nuts.html فقط */
 /* ==================================================== */
+
 .nuts-grid-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    padding: 20px 10px;
+    gap: 30px;
+    padding: 40px 20px;
     max-width: 1200px;
     margin: 0 auto;
-    width: 100%;
 }
 
 .ma-an-nuts-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
     background-color: #ffffff !important;
     border-radius: 12px !important;
     border: 1px solid #e0e0e0 !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
-    padding: 15px !important;
+    padding: 20px !important;
     transition: transform 0.2s ease !important;
     overflow: hidden !important;
 }
@@ -235,24 +227,19 @@ body {
 
 .ma-an-nuts-card img {
     width: 100% !important;
-    max-width: 140px;
-    height: 140px !important;
+    max-width: 180px;
+    height: 180px !important;
     object-fit: contain !important;
     border-radius: 8px !important;
     margin-bottom: 15px !important;
 }
 
-/* تعديل لون الخط ليكون داكناً ومناسباً للخلفية البيضاء */
 .ma-an-nuts-card h3 {
-    margin: 0 0 10px 0 !important;
-    font-size: 15px !important;
-    color: #111f3b !important;
+    margin: 0 !important;
+    font-size: 1.1rem !important;
+    color: #ffffff !important;
     font-weight: 600 !important;
     text-align: center !important;
-    min-height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .maan-nuts-card.hidden {
@@ -268,7 +255,6 @@ body {
     gap: 15px;
     margin-bottom: 20px;
     padding: 10px;
-    width: 100%;
 }
 
 .toren-biscuits-card {
@@ -281,34 +267,44 @@ body {
     flex-direction: column !important;
     justify-content: space-between !important;
     border: 1px solid #2c3b52 !important;
+    /* إطار ناعم جداً مائل للأزرق بدلاً من الرمادي */
     transition: transform 0.2s ease;
 }
 
+/* تأثير خفيف عند مرور الماوس فوق كرت البسكوت */
 .toren-biscuits-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25) !important;
 }
 
+/* 3. تنسيق صورة البسكوت داخل الكرت الداكن */
 .toren-biscuits-card img {
     width: 100% !important;
-    height: 120px !important;
+    height: 140px !important;
     object-fit: contain !important;
     border-radius: 8px !important;
     margin-bottom: 10px !important;
     background-color: #ffffff;
+    /* خلفية بيضاء صغيرة خلف المنتج ليبرز كيس البسكوت بوضوح */
     padding: 5px;
 }
 
+/* 4. إظهار أسماء البسكوت (العناوين) باللون الأبيض الناصع لتبدو واضحة جداً */
 .toren-biscuits-card h3 {
-    margin: 0 0 10px 0 !important;
+    margin: 0 !important;
     font-size: 14px !important;
     color: #ffffff !important;
+    /* لون أبيض ناصع لقراءة ممتازة */
     font-weight: 600 !important;
     min-height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
+
+
+
 
 /* ==================================================== */
 /* أكواد مخصصة لصفحة qousai-food.html فقط */
@@ -319,7 +315,6 @@ body {
     gap: 15px;
     margin-bottom: 20px;
     padding: 10px;
-    width: 100%;
 }
 
 .qousai-food-card {
@@ -332,28 +327,34 @@ body {
     flex-direction: column !important;
     justify-content: space-between !important;
     border: 1px solid #2c3b52 !important;
+    /* إطار ناعم جداً مائل للأزرق بدلاً من الرمادي */
     transition: transform 0.2s ease;
 }
 
+/* تأثير خفيف عند مرور الماوس فوق كرت قصي فوود*/
 .qousai-food-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25) !important;
 }
 
+/* 3. تنسيق صورة البسكوت داخل الكرت الداكن */
 .qousai-food-card img {
     width: 100% !important;
-    height: 120px !important;
+    height: 140px !important;
     object-fit: contain !important;
     border-radius: 8px !important;
     margin-bottom: 10px !important;
     background-color: #ffffff;
+    /* خلفية بيضاء صغيرة خلف المنتج ليبرز منتج قصي فوود بوضوح*/
     padding: 5px;
 }
 
+/* 4. إظهار أسماء المنتجات (العناوين) باللون الأبيض الناصع لتبدو واضحة جداً */
 .qousai-food-card h3 {
-    margin: 0 0 10px 0 !important;
+    margin: 0 !important;
     font-size: 14px !important;
     color: #ffffff !important;
+    /* لون أبيض ناصع لقراءة ممتازة */
     font-weight: 600 !important;
     min-height: 40px;
     display: flex;
@@ -361,61 +362,60 @@ body {
     justify-content: center;
 }
 
+
 /* ==================================================== */
-/* كود السحر والتجاوب (Media Queries) للشاشات الصغيرة */
+/* التعديل الجديد والمصلح لزر التالي (Next) في أسفل الصفحة */
 /* ==================================================== */
-@media (max-width: 768px) {
-    body {
-        padding: 10px;
-        border-width: 2px;
-        /* تنحيف الخط الذهبي على الموبايل ليناسب الأبعاد */
-    }
 
-    .product-container {
-        flex-direction: column;
-        /* جعل العناوين فوق المنتجات وليس بجانبها */
-        gap: 15px;
-    }
-
-    .brand-section {
-        width: 100%;
-        min-width: 100%;
-        min-height: auto;
-        padding: 15px;
-    }
-
-    /* تطبيق فكرتك الذكية: جعل الكروت تظهر كرتين في السطر بدلاً من 4 */
-    .nuts-grid-container,
-    .biscuits-grid-container,
-    .food-grid-container,
-    .products-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 12px;
-        padding: 5px;
-    }
-
-    /* موازنة أحجام الصور داخل الكروت لتناسب التلفون تماماً */
-    .ma-an-nuts-card img,
-    .toren-biscuits-card img,
-    .qousai-food-card img,
-    .product-img {
-        height: 110px !important;
-    }
-
-    .main-header {
-        padding: 15px;
-        margin-bottom: 15px;
-    }
+/* تعديل طفيف لضمان نزول الزر تحت القسمين بشكل كامل على الموبايل والكمبيوتر */
+.product-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* تسمح للزر بالنزول للأسفل دون الالتزام بالمجاورة الأفقية */
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+    position: relative;
 }
 
-/* الهواتف الصغيرة جداً */
-@media (max-width: 380px) {
+.next-page-container {
+    width: 100%;
+    /* تجعل حاوية الزر تأخذ العرض الكامل لتجبره على النزول أسفل البلوكات */
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
 
-    .nuts-grid-container,
-    .biscuits-grid-container,
-    .food-grid-container,
-    .products-grid {
-        grid-template-columns: 1fr !important;
-        /* كرت واحد بالسطر إذا كانت الشاشة ضيقة جداً */
-    }
+.next-page-container a {
+    text-decoration: none;
+}
+
+.btn-next-page {
+    display: block;
+    width: 220px;
+    padding: 12px;
+    background-color: #1976d2;
+    /* تم تغيير اللون للأزرق الرسمي ليتناسق مع ألوان الهيدر وأزرار موقعك */
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(25, 118, 210, 0.25);
+    transition: all 0.3s ease;
+    font-family: 'Cairo', sans-serif;
+}
+
+.btn-next-page:hover {
+    background-color: #115293;
+    /* يصبح أغمق قليلاً عند تمرير الماوس */
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(25, 118, 210, 0.4);
+}
+
+.btn-next-page:active {
+    transform: scale(0.95);
 }
