@@ -419,3 +419,28 @@ body {
 .btn-next-page:active {
     transform: scale(0.95);
 }
+/* تعديل ارتفاع الصور لتتناسب مع أبعاد الموبايل دون تشويه */
+.ma-an-nuts-card img,
+.toren-biscuits-card img,
+.qousai-food-card img,
+.product-img {
+height: 110px !important;
+}
+.next-page-container {
+margin-top: 25px !important;
+margin-bottom: 20px !important; /* مسافة حماية لعدم التداخل مع الخط الذهبي السفلي */
+}
+.btn-next-page {
+max-width: 240px !important;
+font-size: 15px !important;
+}
+}
+@media (max-width: 380px) {
+.nuts-grid-container,
+.biscuits-grid-container,
+.food-grid-container,
+.products-grid {
+grid-template-columns: 1fr !important; /* كرت واحد بالسطر للهواتف الصغيرة جداً */
+}
+}
+
