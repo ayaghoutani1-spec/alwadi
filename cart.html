@@ -223,6 +223,32 @@
                 <input type="text" id="location" class="wadi-loc" placeholder="مثال: السويداء - حي الأمل" required>
             </div>
 
+            <!-- خانة اختيار الموزع -->
+        <div class="distributor-section" style="margin: 20px 0; font-family: Arial, sans-serif; direction: rtl;">
+           <label for="distributor-select" style="display:block; margin-bottom:8px; font-weight:bold; color: #333;">اختر الموزع (اختياري):</label>
+           <select id="distributor-select" style="padding: 10px; width: 100%; max-width: 350px; border: 1px solid #ccc; border-radius: 4px; font-size: 15px;">
+             <option value="">-- لم يتم اختيار موزع --</option>
+             <option value="مركز الوادي">مركز الوادي</option>
+             <option value="انس حرب">انس حرب</option>
+             <option value="معتز عامر">معتز عامر</option>
+             <option value="عمر الغوطاني">عمر الغوطاني</option>
+             <option value="سلطان زين الدين">سلطان زين الدين</option>
+             <option value="بهاء جودية">بهاء جودية</option>
+             <option value="عاصم الحلبي">عاصم الحلبي</option>
+             <option value="مازن الحسين">مازن الحسين</option>
+             <option value="ايمن ابو حسون">ايمن ابو حسون</option>
+             <option value="حسين الغوطاني">حسين الغوطاني</option>
+             <option value="نائل الغوطاني">نائل الغوطاني</option>
+               <option value="حلدون زهر الدين">خلدون زهر الدين</option>
+        </select>
+      </div>
+
+<!-- زر التأكيد والإرسال عبر الواتساب -->
+<button onclick="sendToWhatsApp()" style="background-color: #25D366; color: white; padding: 12px 25px; border: none; border-radius: 4px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; gap: 8px; direction: rtl;">
+  تأكيد وإرسال عبر الواتساب
+</button>
+
+
             <!-- زر إرسال حقيقي للفورم يستحيل حظره أو تعطيله -->
             <button type="submit" class="btn-submit"
                 style="display: block; width: 100%; text-align: center; border: none; cursor: pointer; height: 40px; line-height: 40px; background-color: #ecc07d; color: #11141a; font-weight: bold; border-radius: 5px; font-size: 15px; box-sizing: border-box; padding: 0;">
@@ -331,7 +357,7 @@
         
         // 1. رقم مركز الوادي المعتمد والظاهر في الصورة
         // رقم مركز الوادي بالصيغة الدولية الصحيحة
-        var wadiCompanyPhone = "963968952965"; 
+        var wadiCompanyPhone = "963992351754"; 
 
        // تشفير نص الفاتورة
        var encodedText = encodeURIComponent(messageText);
