@@ -313,6 +313,8 @@
         var nameVal = document.getElementById('username') ? document.getElementById('username').value.trim() : "";
         var phoneVal = document.getElementById('phone') ? document.getElementById('phone').value.trim() : "";
         var locVal = document.getElementById('location') ? document.getElementById('location').value.trim() : "";
+            // جلب الموزع المختار من قائمة الـ HTML التي أضفناها
+        var distributorVal = document.getElementById('distributor-select') ? document.getElementById('distributor-select').value.trim() : "";
 
         if (nameVal === "" || phoneVal === "" || locVal === "") {
             alert("يرجى ملء جميع البيانات أولاً!");
@@ -323,6 +325,13 @@
         messageText += "الاسم: " + nameVal + "\n";
         messageText += "رقم الهاتف: " + phoneVal + "\n";
         messageText += "العنوان: " + locVal + "\n";
+        // إضافة اسم الموزع إلى نص الرسالة إذا تم اختياره
+       if (distributorVal !== "") {
+        messageText += "الموزع المختار: " + distributorVal + "\n";
+      } 
+       else {
+        messageText += "الموزع المختار: لم يتم اختيار موزع (طلب مباشر)\n";
+       }
         messageText += "----------------------------\n";
         messageText += "تفاصيل الطلبية:\n\n";
 
