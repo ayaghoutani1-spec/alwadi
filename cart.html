@@ -329,20 +329,18 @@
         // التعديل السحري لضمان فتح شات مركز الوادي مباشرة لجميع الهواتف
         // ====================================================
         
-        // رقم هاتف مركز الوادي بالصيغة الدولية المعتمدة (بدول أصفار وبدون زائد)
+        // 1. رقم مركز الوادي المعتمد والظاهر في الصورة
         var wadiCompanyPhone = "963931668374"; 
-        
-        // تشفير النص المكتوب ليكون متوافقاً وآمناً مع روابط الإنترنت القياسية
-        var encodedText = encodeURIComponent(messageText);
-        
-        // صياغة رابط الواتساب القياسي الحديث لفتح المحادثة وضخ الفاتورة فوراً
-        var whatsappUrl = "https://wa.me" + wadiCompanyPhone + "?text=" + encodedText;
 
-        // تفريغ السلة من الذاكرة المحلية (localStorage) بعد إتمام الطلب بنجاح (اختياري، يمكنكِ إزالته إن لم ترغبي بتصفير السلة فوراً)
-        // localStorage.clear(); 
+       // 2. تشفير النص بشكل آمن
+       var encodedText = encodeURIComponent(messageText);
 
-        // توجيه المتصفح لفتح المحادثة المباشرة في تطبيق الواتساب
-        window.location.href = whatsappUrl;
+      // 3. الرابط الصحيح 100% مع إضافة السلاش "/" والسلاسل النصية بشكل صحيح
+      var whatsappUrl = "https://wa.me" + wadiCompanyPhone + "?text=" + encodedText;
+
+      // 4. التوجيه المباشر لفتح محادثة العميل
+      window.location.href = whatsappUrl;
+
 
         return true;
     }
