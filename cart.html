@@ -271,11 +271,10 @@
 
             if (!tableBody) return;
 
-            let grandTotalTarad = 0;
-            let grandTotalKees = 0;
-            let grandTotalOlab = 0;
-            let grandTotalQusaiPieces = 0;
-            let grandTotalNormalTarad = 0;
+            let totalMwalihQty = 0;
+            let totalTorenQty = 0;
+            let totalQusaiPieces = 0;
+            let totalNormalTarad = 0;
             
             tableBody.innerHTML = "";
 
@@ -289,7 +288,6 @@
                     if (qty > 0) {
                         let unitText = "";
                         
-                        // الفحص الذكي بالاحتواء الشامل للمفتاح لضمان قراءة التصنيف بدقة
                         if (key.includes('mwalih')) {
                             let tarad = Math.floor(qty / 12);
                             let kees = qty % 12;
@@ -301,9 +299,7 @@
                             } else {
                                 unitText = kees + " كيس";
                             }
-                            
-                            grandTotalTarad += tarad;
-                            grandTotalKees += kees;
+                            totalMwalihQty += qty;
                         } 
                         else if (key.includes('toren')) {
                             let tarad = Math.floor(qty / 6);
@@ -316,17 +312,15 @@
                             } else {
                                 unitText = olba + " علبة";
                             }
-                            
-                            grandTotalTarad += tarad;
-                            grandTotalOlab += olba;
+                            totalTorenQty += qty;
                         } 
                         else if (key.includes('qousai')) {
                             unitText = qty + " قطعة";
-                            grandTotalQusaiPieces += qty;
+                            totalQusaiPieces += qty;
                         } 
                         else {
                             unitText = qty + " طرد";
-                            grandTotalNormalTarad += qty;
+                            totalNormalTarad += qty;
                         }
 
                         let row = "<tr>" +
@@ -339,21 +333,38 @@
                 }
             }
 
-            let extraMawalihTarad = Math.ceil(grandTotalKees / 12);
-            let extraOlabTarad = Math.ceil(grandTotalOlab / 6);
-            let finalTotalTarad = grandTotalTarad + extraMawalihTarad + extraOlabTarad + grandTotalNormalTarad;
-
-            if (grandTotalTarad === 0 && grandTotalKees === 0 && grandTotalOlab === 0 && grandTotalQusaiPieces === 0 && grandTotalNormalTarad === 0) {
+            if (totalMwalihQty === 0 && totalTorenQty === 0 && totalQusaiPieces === 0 && totalNormalTarad === 0) {
                 tableBody.innerHTML = "<tr><td colspan='3' style='text-align:center; color:#888; padding: 20px 0;'>السلة فارغة، يرجى العودة واختيار أصناف.</td></tr>";
             }
 
             if (totalElement) {
-                let summaryText = "";
-                if (finalTotalTarad > 0) summaryText += finalTotalTarad + " طرود ";
-                if (grandTotalQusaiPieces > 0) summaryText += (finalTotalTarad > 0 ? " و " : "") + grandTotalQusaiPieces + " قطعة قصي فوود";
-                if (summaryText === "") summaryText = "0 طرود";
+                let summaryParts = [];
                 
-                totalElement.innerText = summaryText;
+                if (totalMwalihQty > 0) {
+                    let t = Math.floor(totalMwalihQty / 12);
+                    let k = totalMwalihQty % 12;
+                    if (t > 0 && k > 0) summaryParts.push(t + " طرد و " + k + " كيس موالح معن");
+                    else if (t > 0) summaryParts.push(t + " طرد موالح معن");
+                    else summaryParts.push(k + " كيس موالح معن");
+                }
+                
+                if (totalTorenQty > 0) {
+                    let t = Math.floor(totalTorenQty / 6);
+                    let o = totalTorenQty % 6;
+                    if (t > 0 && o > 0) summaryParts.push(t + " طرد و " + o + " علبة بسكوت تورن");
+                    else if (t > 0) summaryParts.push(t + " طرد بسكوت تورن");
+                    else summaryParts.push(o + " علبة بسكوت تورن");
+                }
+                
+                if (totalQusaiPieces > 0) {
+                    summaryParts.push(totalQusaiPieces + " قطعة قصي فوود");
+                }
+                
+                if (totalNormalTarad > 0) {
+                    summaryParts.push(totalNormalTarad + " طرود شحن عام");
+                }
+                
+                totalElement.innerText = summaryParts.length > 0 ? summaryParts.join(" و ") : "0 طرود";
             }
         }
 
@@ -388,11 +399,10 @@
         messageText += "تفاصيل الطلبية:\n\n";
 
         var hasItems = false;
-        var grandTotalTarad = 0;
-        var grandTotalKees = 0;
-        var grandTotalOlab = 0;
-        var grandTotalQusaiPieces = 0;
-        var grandTotalNormalTarad = 0;
+        var totalMwalihQty = 0;
+        var totalTorenQty = 0;
+        var totalQusaiPieces = 0;
+        var totalNormalTarad = 0;
 
         for (var i = 0; i < localStorage.length; i++) {
             var key = localStorage.key(i);
@@ -411,8 +421,7 @@
                         else if (tarad > 0) unitText = tarad + " طرد";
                         else unitText = kees + " كيس";
                         
-                        grandTotalTarad += tarad;
-                        grandTotalKees += kees;
+                        totalMwalihQty += qty;
                     } else if (key.includes('toren')) {
                         var tarad = Math.floor(qty / 6);
                         var olba = qty % 6;
@@ -420,37 +429,56 @@
                         else if (tarad > 0) unitText = tarad + " طرد";
                         else unitText = olba + " علبة";
                         
-                        grandTotalTarad += tarad;
-                        grandTotalOlab += olba;
+                        totalTorenQty += qty;
                     } else if (key.includes('qousai')) {
                         unitText = qty + " قطعة";
-                        grandTotalQusaiPieces += qty;
+                        totalQusaiPieces += qty;
                     } else {
                         unitText = qty + " طرد";
-                        grandTotalNormalTarad += qty;
+                        totalNormalTarad += qty;
                     }
 
-                    // تعديل ظهور النص ليظهر الكمية متبوعة بالوصف الخاص بها مباشرة بدلاً من كلمة وحدة
                     messageText += "- " + arabicName + ": " + qty + " (" + unitText + ")\n";
                 }
             }
         }
-
-        var extraMawalihTarad = Math.ceil(grandTotalKees / 12);
-        var extraOlabTarad = Math.ceil(grandTotalOlab / 6);
-        var finalTotalTarad = grandTotalTarad + extraMawalihTarad + extraOlabTarad + grandTotalNormalTarad;
-
-        messageText += "\n----------------------------\n";
-        messageText += "خلاصة التعبئة والشحن الإجمالية:\n";
-        if (finalTotalTarad > 0) messageText += "- إجمالي الشحن: " + finalTotalTarad + " طرود\n";
-        if (grandTotalQusaiPieces > 0) messageText += "- إجمالي قصي فوود: " + grandTotalQusaiPieces + " قطعة\n";
 
         if (!hasItems) {
             alert("سلة المشتريات فارغة!");
             return false;
         }
 
-        // قراءة وتحديد الرقم المستهدف بشكل صحيح وجعله يفتح رقم الموزع المختار ديناميكياً
+        messageText += "\n----------------------------\n";
+        messageText += "خلاصة التعبئة والشحن الإجمالية:\n";
+
+        if (totalMwalihQty > 0) {
+            var mwalihTarad = Math.floor(totalMwalihQty / 12);
+            var mwalihKees = totalMwalihQty % 12;
+            var mwalihText = "";
+            if (mwalihTarad > 0 && mwalihKees > 0) mwalihText = mwalihTarad + " طرد و " + mwalihKees + " كيس";
+            else if (mwalihTarad > 0) mwalihText = mwalihTarad + " طرد";
+            else mwalihText = mwalihKees + " كيس";
+            messageText += "• إجمالي موالح معن: " + mwalihText + "\n";
+        }
+
+        if (totalTorenQty > 0) {
+            var torenTarad = Math.floor(totalTorenQty / 6);
+            var torenOlab = totalTorenQty % 6;
+            var torenText = "";
+            if (torenTarad > 0 && torenOlab > 0) torenText = torenTarad + " طرد و " + torenOlab + " علبة";
+            else if (torenTarad > 0) torenText = torenTarad + " طرد";
+            else torenText = torenOlab + " علبة";
+            messageText += "• إجمالي بسكوت تورن: " + torenText + "\n";
+        }
+
+        if (totalQusaiPieces > 0) {
+            messageText += "• إجمالي قصي فوود: " + totalQusaiPieces + " قطعة\n";
+        }
+
+        if (totalNormalTarad > 0) {
+            messageText += "• إجمالي الشحن العام: " + totalNormalTarad + " طرد\n";
+        }
+
         var finalTargetPhone = (distributorPhone !== "") ? distributorPhone : "963992351754"; 
 
         var encodedText = encodeURIComponent(messageText);
@@ -458,18 +486,17 @@
         var whatsappWebUrl = "https://wa.me" + finalTargetPhone + "?text=" + encodedText;
         
         localStorage.clear(); 
-
         try {
-            window.location.href = whatsappAppUrl;
-        } catch (e) {
-            window.location.href = whatsappWebUrl;
-        }
-
-        return true;
+       window.location.href = whatsappAppUrl;
+       }
+        catch (e) {
+       window.location.href = whatsappWebUrl;
+       }
+       return true;
     }
+
+
 </script>
-
-
 
 
 </html>
