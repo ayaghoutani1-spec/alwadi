@@ -273,6 +273,7 @@
             let mawalihQty = 0;
             let olabQty = 0;
             let qusaiQty = 0;
+            let normalTaradQty = 0; // احتياطي لأي منتج آخر
             
             tableBody.innerHTML = "";
 
@@ -285,17 +286,21 @@
 
                     if (qty > 0) {
                         let unitText = "طرد";
+                        let nameLower = arabicName.toLowerCase();
                         
-                        // تصنيف المنتج حسب الاسم المكتوب في ذاكرة المتصفح
-                        if (arabicName.includes("موالح")) {
+                        // تصنيف المنتج حسب الاسم المكتوب بشكل مرن
+                        if (nameLower.includes("موالح") || nameLower.includes("كيس")) {
                             mawalihQty += qty;
-                            unitText = "عدة"; // الموالح تعرض في السطر كوحدات (عدات) قبل حساب طرودها الإجمالية
-                        } else if (arabicName.includes("علب") || arabicName.includes("علبة")) {
+                            unitText = "كيس";
+                        } else if (nameLower.includes("علب") || nameLower.includes("بسكوت") || nameLower.includes("تورن")) {
                             olabQty += qty;
                             unitText = "علبة";
-                        } else if (arabicName.includes("قصي فوود") || arabicName.includes("قصي")) {
+                        } else if (nameLower.includes("قصي") || nameLower.includes("فود") || nameLower.includes("food")) {
                             qusaiQty += qty;
                             unitText = "قطعة";
+                        } else {
+                            normalTaradQty += qty;
+                            unitText = "طرد";
                         }
 
                         let row = "<tr>" +
@@ -308,16 +313,16 @@
                 }
             }
 
-            // حساب الطرود الإجمالية المقربة للأعلى
+            // الحسبة الرياضية المقربة للأعلى للطرود
             let mawalihTarad = Math.ceil(mawalihQty / 12);
             let olabTarad = Math.ceil(olabQty / 6);
-            let totalTarad = mawalihTarad + olabTarad;
+            let totalTarad = mawalihTarad + olabTarad + normalTaradQty;
 
-            if (mawalihQty === 0 && olabQty === 0 && qusaiQty === 0) {
+            if (mawalihQty === 0 && olabQty === 0 && qusaiQty === 0 && normalTaradQty === 0) {
                 tableBody.innerHTML = "<tr><td colspan='3' style='text-align:center; color:#888; padding: 20px 0;'>السلة فارغة، يرجى العودة واختيار أصناف.</td></tr>";
             }
 
-            // تحديث نص الإجمالي في صفحة السلة ليظهر الطرود والقطع بدقة
+            // تحديث نص الإجمالي بأسفل صفحة cart.html ليظهر الطرود والقطع بدقة
             if (totalElement) {
                 let summaryText = "";
                 if (totalTarad > 0) summaryText += totalTarad + " طرود ";
@@ -331,15 +336,23 @@
         updateLiveInvoiceDirectly();
     });
 
-    // دالة تجهيز نص الفاتورة وإرسالها المباشر عبر رابط قياسي مضمون لفتح شات مركز الوادي
+    // ====================================================
+    // ميزة التصفير التلقائي للسلة عند مغادرة أو إغلاق الصفحة
+    // ====================================================
+    window.addEventListener('pagehide', () => {
+        localStorage.clear();
+    });
+    window.addEventListener('unload', () => {
+        localStorage.clear();
+    });
+
+    // دالة تجهيز نص الفاتورة وإرسالها المباشر لمركز الوادي
     function buildWadiMessageBeforeSend(event) {
-        // منع السلوك الافتراضي للفورم للتحكم بالإرسال برمجياً وضمان فتحه في شات مركز الوادي فوراً
         event.preventDefault();
 
         var nameVal = document.getElementById('username') ? document.getElementById('username').value.trim() : "";
         var phoneVal = document.getElementById('phone') ? document.getElementById('phone').value.trim() : "";
         var locVal = document.getElementById('location') ? document.getElementById('location').value.trim() : "";
-        // جلب الموزع المختار من قائمة الـ HTML التي أضفناها
         var distributorVal = document.getElementById('distributor-select') ? document.getElementById('distributor-select').value.trim() : "";
 
         if (nameVal === "" || phoneVal === "" || locVal === "") {
@@ -351,7 +364,7 @@
         messageText += "الاسم: " + nameVal + "\n";
         messageText += "رقم الهاتف: " + phoneVal + "\n";
         messageText += "العنوان: " + locVal + "\n";
-        // إضافة اسم الموزع إلى نص الرسالة إذا تم اختياره
+        
         if (distributorVal !== "") {
             messageText += "الموزع المختار: " + distributorVal + "\n";
         } else {
@@ -364,6 +377,7 @@
         var mawalihQty = 0;
         var olabQty = 0;
         var qusaiQty = 0;
+        var normalTaradQty = 0;
 
         for (var i = 0; i < localStorage.length; i++) {
             var key = localStorage.key(i);
@@ -374,16 +388,20 @@
                 if (qty > 0) {
                     hasItems = true;
                     var unitText = "طرد";
+                    var nameLower = arabicName.toLowerCase();
 
-                    if (arabicName.includes("موالح")) {
+                    if (nameLower.includes("موالح") || nameLower.includes("كيس")) {
                         mawalihQty += qty;
-                        unitText = "عدة";
-                    } else if (arabicName.includes("علب") || arabicName.includes("علبة")) {
+                        unitText = "كيس";
+                    } else if (nameLower.includes("علب") || nameLower.includes("بسكوت") || nameLower.includes("تورن")) {
                         olabQty += qty;
                         unitText = "علبة";
-                    } else if (arabicName.includes("قصي فوود") || arabicName.includes("قصي")) {
+                    } else if (nameLower.includes("قصي") || nameLower.includes("فود") || nameLower.includes("food")) {
                         qusaiQty += qty;
                         unitText = "قطعة";
+                    } else {
+                        normalTaradQty += qty;
+                        unitText = "طرد";
                     }
 
                     messageText += "- " + arabicName + ": " + qty + " " + unitText + "\n";
@@ -391,10 +409,10 @@
             }
         }
 
-        // الحسبة النهائية المقربة للطرود لرسالة الواتساب
+        // الحسبة النهائية لرسالة الواتساب
         var mawalihTarad = Math.ceil(mawalihQty / 12);
         var olabTarad = Math.ceil(olabQty / 6);
-        var totalTarad = mawalihTarad + olabTarad;
+        var totalTarad = mawalihTarad + olabTarad + normalTaradQty;
 
         messageText += "\n----------------------------\n";
         messageText += "خلاصة التعبئة والشحن:\n";
@@ -410,28 +428,13 @@
             return false;
         }
 
-        // ====================================================
-        // التعديل السحري لضمان فتح شات مركز الوادي مباشرة لجميع الهواتف
-        // ====================================================
-        
-        // 1. رقم مركز الوادي المعتمد والظاهر في الصورة
         var wadiCompanyPhone = "963992351754"; 
-
-        // تشفير نص الفاتورة
         var encodedText = encodeURIComponent(messageText);
-
-        // الرابط المباشر البديل الذي يجبر نظام الهاتف على فتح تطبيق الواتساب فوراً
         var whatsappAppUrl = "whatsapp://send?phone=" + wadiCompanyPhone + "&text=" + encodedText;
-
-        // الرابط القياسي الاحتياطي
         var whatsappWebUrl = "https://wa.me" + wadiCompanyPhone + "?text=" + encodedText;
         
-        // ====================================================
-        // التعديل السحري: تصفير السلة تماماً من ذاكرة المتصفح قبل الانتقال
-        // ====================================================
         localStorage.clear(); 
 
-        // محاولة توجيه الهاتف لفتح التطبيق مباشرة، وإذا لم يستجب يفتح رابط الويب
         try {
             window.location.href = whatsappAppUrl;
         } catch (e) {
@@ -441,7 +444,5 @@
         return true;
     }
 </script>
-
-
 
 </html>
