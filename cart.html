@@ -262,7 +262,7 @@
         </div>
 
         <!-- كود الجافا سكريبت النظيف جداً بدون توليد روابط معقدة -->
-        <script>
+       <script>
     document.addEventListener('DOMContentLoaded', () => {
         function updateLiveInvoiceDirectly() {
             const tableBody = document.getElementById("cart-table-body");
@@ -270,7 +270,10 @@
 
             if (!tableBody) return;
 
-            let totalQty = 0;
+            let mawalihQty = 0;
+            let olabQty = 0;
+            let qusaiQty = 0;
+            
             tableBody.innerHTML = "";
 
             for (let i = 0; i < localStorage.length; i++) {
@@ -281,23 +284,47 @@
                     let arabicName = localStorage.getItem(key + '_name') || "صنف غير معرف";
 
                     if (qty > 0) {
-                        totalQty += qty;
+                        let unitText = "طرد";
+                        
+                        // تصنيف المنتج حسب الاسم المكتوب في ذاكرة المتصفح
+                        if (arabicName.includes("موالح")) {
+                            mawalihQty += qty;
+                            unitText = "عدة"; // الموالح تعرض في السطر كوحدات (عدات) قبل حساب طرودها الإجمالية
+                        } else if (arabicName.includes("علب") || arabicName.includes("علبة")) {
+                            olabQty += qty;
+                            unitText = "علبة";
+                        } else if (arabicName.includes("قصي فوود") || arabicName.includes("قصي")) {
+                            qusaiQty += qty;
+                            unitText = "قطعة";
+                        }
+
                         let row = "<tr>" +
                             "<td>" + arabicName + "</td>" +
                             "<td style='text-align: center;'>" + qty + "</td>" +
-                            "<td style='text-align: left;'>طرد</td>" +
+                            "<td style='text-align: left;'>" + unitText + "</td>" +
                             "</tr>";
                         tableBody.innerHTML += row;
                     }
                 }
             }
 
-            if (totalQty === 0) {
+            // حساب الطرود الإجمالية المقربة للأعلى
+            let mawalihTarad = Math.ceil(mawalihQty / 12);
+            let olabTarad = Math.ceil(olabQty / 6);
+            let totalTarad = mawalihTarad + olabTarad;
+
+            if (mawalihQty === 0 && olabQty === 0 && qusaiQty === 0) {
                 tableBody.innerHTML = "<tr><td colspan='3' style='text-align:center; color:#888; padding: 20px 0;'>السلة فارغة، يرجى العودة واختيار أصناف.</td></tr>";
             }
 
+            // تحديث نص الإجمالي في صفحة السلة ليظهر الطرود والقطع بدقة
             if (totalElement) {
-                totalElement.innerText = totalQty + " طرود";
+                let summaryText = "";
+                if (totalTarad > 0) summaryText += totalTarad + " طرود ";
+                if (qusaiQty > 0) summaryText += (totalTarad > 0 ? " و " : "") + qusaiQty + " قطعة قصي فوود";
+                if (summaryText === "") summaryText = "0 طرود";
+                
+                totalElement.innerText = summaryText;
             }
         }
 
@@ -312,7 +339,7 @@
         var nameVal = document.getElementById('username') ? document.getElementById('username').value.trim() : "";
         var phoneVal = document.getElementById('phone') ? document.getElementById('phone').value.trim() : "";
         var locVal = document.getElementById('location') ? document.getElementById('location').value.trim() : "";
-            // جلب الموزع المختار من قائمة الـ HTML التي أضفناها
+        // جلب الموزع المختار من قائمة الـ HTML التي أضفناها
         var distributorVal = document.getElementById('distributor-select') ? document.getElementById('distributor-select').value.trim() : "";
 
         if (nameVal === "" || phoneVal === "" || locVal === "") {
@@ -325,17 +352,18 @@
         messageText += "رقم الهاتف: " + phoneVal + "\n";
         messageText += "العنوان: " + locVal + "\n";
         // إضافة اسم الموزع إلى نص الرسالة إذا تم اختياره
-       if (distributorVal !== "") {
-        messageText += "الموزع المختار: " + distributorVal + "\n";
-      } 
-       else {
-        messageText += "الموزع المختار: لم يتم اختيار موزع (طلب مباشر)\n";
-       }
+        if (distributorVal !== "") {
+            messageText += "الموزع المختار: " + distributorVal + "\n";
+        } else {
+            messageText += "الموزع المختار: لم يتم اختيار موزع (طلب مباشر)\n";
+        }
         messageText += "----------------------------\n";
         messageText += "تفاصيل الطلبية:\n\n";
 
         var hasItems = false;
-        var totalQty = 0;
+        var mawalihQty = 0;
+        var olabQty = 0;
+        var qusaiQty = 0;
 
         for (var i = 0; i < localStorage.length; i++) {
             var key = localStorage.key(i);
@@ -345,14 +373,37 @@
 
                 if (qty > 0) {
                     hasItems = true;
-                    totalQty += qty;
-                    messageText += "- " + arabicName + ": " + qty + " طرد\n";
+                    var unitText = "طرد";
+
+                    if (arabicName.includes("موالح")) {
+                        mawalihQty += qty;
+                        unitText = "عدة";
+                    } else if (arabicName.includes("علب") || arabicName.includes("علبة")) {
+                        olabQty += qty;
+                        unitText = "علبة";
+                    } else if (arabicName.includes("قصي فوود") || arabicName.includes("قصي")) {
+                        qusaiQty += qty;
+                        unitText = "قطعة";
+                    }
+
+                    messageText += "- " + arabicName + ": " + qty + " " + unitText + "\n";
                 }
             }
         }
 
+        // الحسبة النهائية المقربة للطرود لرسالة الواتساب
+        var mawalihTarad = Math.ceil(mawalihQty / 12);
+        var olabTarad = Math.ceil(olabQty / 6);
+        var totalTarad = mawalihTarad + olabTarad;
+
         messageText += "\n----------------------------\n";
-        messageText += "إجمالي الكمية: " + totalQty + " طرود";
+        messageText += "خلاصة التعبئة والشحن:\n";
+        if (totalTarad > 0) {
+            messageText += "- إجمالي الشحن: " + totalTarad + " طرود\n";
+        }
+        if (qusaiQty > 0) {
+            messageText += "- إجمالي قصي فوود: " + qusaiQty + " قطعة\n";
+        }
 
         if (!hasItems) {
             alert("سلة المشتريات فارغة!");
@@ -364,34 +415,33 @@
         // ====================================================
         
         // 1. رقم مركز الوادي المعتمد والظاهر في الصورة
-        // رقم مركز الوادي بالصيغة الدولية الصحيحة
         var wadiCompanyPhone = "963992351754"; 
 
-       // تشفير نص الفاتورة
-       var encodedText = encodeURIComponent(messageText);
+        // تشفير نص الفاتورة
+        var encodedText = encodeURIComponent(messageText);
 
-      // الرابط المباشر البديل الذي يجبر نظام الهاتف على فتح تطبيق الواتساب فوراً دون المرور بالمتصفح
-      var whatsappAppUrl = "whatsapp://send?phone=" + wadiCompanyPhone + "&text=" + encodedText;
+        // الرابط المباشر البديل الذي يجبر نظام الهاتف على فتح تطبيق الواتساب فوراً
+        var whatsappAppUrl = "whatsapp://send?phone=" + wadiCompanyPhone + "&text=" + encodedText;
 
-     // الرابط القياسي الاحتياطي
-     var whatsappWebUrl = "https://wa.me" + wadiCompanyPhone + "?text=" + encodedText;
+        // الرابط القياسي الاحتياطي
+        var whatsappWebUrl = "https://wa.me" + wadiCompanyPhone + "?text=" + encodedText;
+        
         // ====================================================
-       // التعديل السحري: تصفير السلة تماماً من ذاكرة المتصفح قبل الانتقال
-      // ====================================================
-      localStorage.clear(); 
+        // التعديل السحري: تصفير السلة تماماً من ذاكرة المتصفح قبل الانتقال
+        // ====================================================
+        localStorage.clear(); 
 
-     // محاولة توجيه الهاتف لفتح التطبيق مباشرة، وإذا لم يستجب يفتح رابط الويب
-     try {
-     window.location.href = whatsappAppUrl;
-    } 
-     catch (e) {
-      window.location.href = whatsappWebUrl;
-    }
-
+        // محاولة توجيه الهاتف لفتح التطبيق مباشرة، وإذا لم يستجب يفتح رابط الويب
+        try {
+            window.location.href = whatsappAppUrl;
+        } catch (e) {
+            window.location.href = whatsappWebUrl;
+        }
 
         return true;
     }
 </script>
+
 
 
 </html>
