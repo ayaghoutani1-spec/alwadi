@@ -226,25 +226,26 @@
             
 
             <!-- خانة اختيار الموزع -->
+        <!-- خانة اختيار الموزع -->
         <div class="form-group" style="margin: 20px 0; font-family: Arial, sans-serif; direction: rtl;">
-           <label for="distributor-select" style="display:block; margin-bottom:8px; font-weight:bold; color: #333;">اختر الموزع (اختياري):</label>
-           <select id="distributor-select" style="padding: 10px; width: 100%; max-width: 350px; border: 1px solid #ccc; border-radius: 4px; font-size: 15px;">
-             <option value="">-- لم يتم اختيار موزع --</option>
-             <option value="مركز الوادي">مركز الوادي</option>
-             <option value="انس حرب">انس حرب</option>
-             <option value="معتز عامر">معتز عامر</option>
-             <option value="عمر الغوطاني">عمر الغوطاني</option>
-             <option value="سلطان زين الدين">سلطان زين الدين</option>
-             <option value="بهاء جودية">بهاء جودية</option>
-             <option value="عاصم الحلبي">عاصم الحلبي</option>
-             <option value="مازن الحسين">مازن الحسين</option>
-             <option value="ايمن ابو حسون">ايمن ابو حسون</option>
-             <option value="حسين الغوطاني">حسين الغوطاني</option>
-             <option value="نائل الغوطاني">نائل الغوطاني</option>
-             <option value="حلدون زهر الدين">خلدون زهر الدين</option>
-             <option value="محمود قريشة">محمود قريشة</option>
-        </select>
+        <label for="distributor-select" style="display:block; margin-bottom:8px; font-weight:bold; color: #333;">اختر الموزع (اختياري):</label>
+        <select id="distributor-select" style="padding: 10px; width: 100%; max-width: 350px; border: 1px solid #ccc; border-radius: 4px; font-size: 15px;">
+           <option value="">-- لم يتم اختيار موزع --</option>
+           <option value="963992351754">مركز الوادي</option>
+           <option value="963988921586">أنس حرب</option>
+           <option value="963931668374">معتز عامر</option>
+           <option value="963968952965">عمر الغوطاني</option>
+           <option value="963997687469">سلطان زين الدين</option>
+           <option value="963938094123">بهاء جودية</option>
+           <option value="963962238452">عاصم الحلبي</option>
+           <option value="963988218871">مازن الحسين</option>
+           <option value="963935639148">أيمن أبو حسون</option>
+           <option value="963969371263">حسين الغوطاني</option>
+           <option value="963967846658">نائل الغوطاني</option>
+           <option value="963986808277">محمود قريشة</option>
+      </select>
       </div>
+
 
 
 
@@ -281,7 +282,6 @@
             for (let i = 0; i < localStorage.length; i++) {
                 let key = localStorage.key(i);
 
-                // الفحص يعتمد الآن على بداية المفتاح (Key) للتصنيف الدقيق والآمن
                 if (key && key.startsWith('qty-') && !key.endsWith('_name')) {
                     let qty = parseInt(localStorage.getItem(key)) || 0;
                     let arabicName = localStorage.getItem(key + '_name') || "صنف غير معرف";
@@ -289,7 +289,6 @@
                     if (qty > 0) {
                         let unitText = "";
                         
-                        // 1. فحص قسم موالح معن
                         if (key.startsWith('qty-mwalih')) {
                             let tarad = Math.floor(qty / 12);
                             let kees = qty % 12;
@@ -305,7 +304,6 @@
                             grandTotalTarad += tarad;
                             grandTotalKees += kees;
                         } 
-                        // 2. فحص قسم بسكويت تورن
                         else if (key.startsWith('qty-toren')) {
                             let tarad = Math.floor(qty / 6);
                             let olba = qty % 6;
@@ -321,12 +319,10 @@
                             grandTotalTarad += tarad;
                             grandTotalOlab += olba;
                         } 
-                        // 3. فحص قسم قصي فوود
                         else if (key.startsWith('qty-qousai')) {
                             unitText = qty + " قطعة";
                             grandTotalQusaiPieces += qty;
                         } 
-                        // 4. خيار احتياطي لأي مفتاح قديم أو مختلف
                         else {
                             unitText = qty + " طرد";
                             grandTotalNormalTarad += qty;
@@ -342,7 +338,6 @@
                 }
             }
 
-            // تجميع الكسور المتبقية وتحويلها لطرود إضافية مقربة للأعلى في الإجمالي النهائي لشحن مركز الوادي
             let extraMawalihTarad = Math.ceil(grandTotalKees / 12);
             let extraOlabTarad = Math.ceil(grandTotalOlab / 6);
             let finalTotalTarad = grandTotalTarad + extraMawalihTarad + extraOlabTarad + grandTotalNormalTarad;
@@ -351,7 +346,6 @@
                 tableBody.innerHTML = "<tr><td colspan='3' style='text-align:center; color:#888; padding: 20px 0;'>السلة فارغة، يرجى العودة واختيار أصناف.</td></tr>";
             }
 
-            // تحديث نص الإجمالي بأسفل صفحة السلة
             if (totalElement) {
                 let summaryText = "";
                 if (finalTotalTarad > 0) summaryText += finalTotalTarad + " طرود ";
@@ -365,24 +359,21 @@
         updateLiveInvoiceDirectly();
     });
 
-    // ====================================================
-    // ميزة التصفير التلقائي للسلة عند مغادرة أو إغلاق الصفحة
-    // ====================================================
-    window.addEventListener('pagehide', () => {
-        localStorage.clear();
-    });
-    window.addEventListener('unload', () => {
-        localStorage.clear();
-    });
+    window.addEventListener('pagehide', () => { localStorage.clear(); });
+    window.addEventListener('unload', () => { localStorage.clear(); });
 
-    // دالة تجهيز نص الفاتورة وإرسالها المباشر لمركز الوادي عبر الواتساب
+    // دالة تجهيز نص الفاتورة وإرسالها ديناميكياً للموزع المختار
     function buildWadiMessageBeforeSend(event) {
         event.preventDefault();
 
         var nameVal = document.getElementById('username') ? document.getElementById('username').value.trim() : "";
         var phoneVal = document.getElementById('phone') ? document.getElementById('phone').value.trim() : "";
         var locVal = document.getElementById('location') ? document.getElementById('location').value.trim() : "";
-        var distributorVal = document.getElementById('distributor-select') ? document.getElementById('distributor-select').value.trim() : "";
+        
+        // جلب عنصر القائمة والاسم المكتوب داخلها
+        var distributorSelect = document.getElementById('distributor-select');
+        var distributorPhone = distributorSelect ? distributorSelect.value.trim() : "";
+        var distributorName = distributorSelect ? distributorSelect.options[distributorSelect.selectedIndex].text : "طلب مباشر";
 
         if (nameVal === "" || phoneVal === "" || locVal === "") {
             alert("يرجى ملء جميع البيانات أولاً!");
@@ -393,12 +384,7 @@
         messageText += "الاسم: " + nameVal + "\n";
         messageText += "رقم الهاتف: " + phoneVal + "\n";
         messageText += "العنوان: " + locVal + "\n";
-        
-        if (distributorVal !== "") {
-            messageText += "الموزع المختار: " + distributorVal + "\n";
-        } else {
-            messageText += "الموزع المختار: لم يتم اختيار موزع (طلب مباشر)\n";
-        }
+        messageText += "الموزع المستلم: " + distributorName + "\n";
         messageText += "----------------------------\n";
         messageText += "تفاصيل الطلبية:\n\n";
 
@@ -464,10 +450,12 @@
             return false;
         }
 
-        var wadiCompanyPhone = "963992351754"; 
+        // تحديد الرقم النهائي للإرسال: إذا كانت القائمة فارغة أو لا تحتوي على رقم، يتم استخدام رقم مركز الوادي الافتراضي
+        var finalTargetPhone = (distributorPhone !== "") ? distributorPhone : "963992351754"; 
+
         var encodedText = encodeURIComponent(messageText);
-        var whatsappAppUrl = "whatsapp://send?phone=" + wadiCompanyPhone + "&text=" + encodedText;
-        var whatsappWebUrl = "https://wa.me" + wadiCompanyPhone + "?text=" + encodedText;
+        var whatsappAppUrl = "whatsapp://send?phone=" + finalTargetPhone + "&text=" + encodedText;
+        var whatsappWebUrl = "https://wa.me" + finalTargetPhone + "?text=" + encodedText;
         
         localStorage.clear(); 
 
@@ -480,6 +468,7 @@
         return true;
     }
 </script>
+
 
 
 </html>
