@@ -289,7 +289,8 @@
                     if (qty > 0) {
                         let unitText = "";
                         
-                        if (key.startsWith('qty-mwalih')) {
+                        // الفحص الذكي بالاحتواء الشامل للمفتاح لضمان قراءة التصنيف بدقة
+                        if (key.includes('mwalih')) {
                             let tarad = Math.floor(qty / 12);
                             let kees = qty % 12;
                             
@@ -304,7 +305,7 @@
                             grandTotalTarad += tarad;
                             grandTotalKees += kees;
                         } 
-                        else if (key.startsWith('qty-toren')) {
+                        else if (key.includes('toren')) {
                             let tarad = Math.floor(qty / 6);
                             let olba = qty % 6;
                             
@@ -319,7 +320,7 @@
                             grandTotalTarad += tarad;
                             grandTotalOlab += olba;
                         } 
-                        else if (key.startsWith('qty-qousai')) {
+                        else if (key.includes('qousai')) {
                             unitText = qty + " قطعة";
                             grandTotalQusaiPieces += qty;
                         } 
@@ -362,7 +363,6 @@
     window.addEventListener('pagehide', () => { localStorage.clear(); });
     window.addEventListener('unload', () => { localStorage.clear(); });
 
-    // دالة تجهيز نص الفاتورة وإرسالها ديناميكياً للموزع المختار
     function buildWadiMessageBeforeSend(event) {
         event.preventDefault();
 
@@ -370,7 +370,6 @@
         var phoneVal = document.getElementById('phone') ? document.getElementById('phone').value.trim() : "";
         var locVal = document.getElementById('location') ? document.getElementById('location').value.trim() : "";
         
-        // جلب عنصر القائمة والاسم المكتوب داخلها
         var distributorSelect = document.getElementById('distributor-select');
         var distributorPhone = distributorSelect ? distributorSelect.value.trim() : "";
         var distributorName = distributorSelect ? distributorSelect.options[distributorSelect.selectedIndex].text : "طلب مباشر";
@@ -405,7 +404,7 @@
                     hasItems = true;
                     var unitText = "";
 
-                    if (key.startsWith('qty-mwalih')) {
+                    if (key.includes('mwalih')) {
                         var tarad = Math.floor(qty / 12);
                         var kees = qty % 12;
                         if (tarad > 0 && kees > 0) unitText = tarad + " طرد و " + kees + " كيس";
@@ -414,7 +413,7 @@
                         
                         grandTotalTarad += tarad;
                         grandTotalKees += kees;
-                    } else if (key.startsWith('qty-toren')) {
+                    } else if (key.includes('toren')) {
                         var tarad = Math.floor(qty / 6);
                         var olba = qty % 6;
                         if (tarad > 0 && olba > 0) unitText = tarad + " طرد و " + olba + " علبة";
@@ -423,7 +422,7 @@
                         
                         grandTotalTarad += tarad;
                         grandTotalOlab += olba;
-                    } else if (key.startsWith('qty-qousai')) {
+                    } else if (key.includes('qousai')) {
                         unitText = qty + " قطعة";
                         grandTotalQusaiPieces += qty;
                     } else {
@@ -431,7 +430,8 @@
                         grandTotalNormalTarad += qty;
                     }
 
-                    messageText += "- " + arabicName + ": " + qty + " وحدة (" + unitText + ")\n";
+                    // تعديل ظهور النص ليظهر الكمية متبوعة بالوصف الخاص بها مباشرة بدلاً من كلمة وحدة
+                    messageText += "- " + arabicName + ": " + qty + " (" + unitText + ")\n";
                 }
             }
         }
@@ -450,7 +450,7 @@
             return false;
         }
 
-        // تحديد الرقم النهائي للإرسال: إذا كانت القائمة فارغة أو لا تحتوي على رقم، يتم استخدام رقم مركز الوادي الافتراضي
+        // قراءة وتحديد الرقم المستهدف بشكل صحيح وجعله يفتح رقم الموزع المختار ديناميكياً
         var finalTargetPhone = (distributorPhone !== "") ? distributorPhone : "963992351754"; 
 
         var encodedText = encodeURIComponent(messageText);
@@ -468,6 +468,7 @@
         return true;
     }
 </script>
+
 
 
 
